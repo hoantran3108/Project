@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 const productsSelector = (state) => state.products.byId
 const addedIdsSelector = (state) => state.cart.addedIds
-const quantityByIdsSelector = (state) => state.cart.quantityById
+export const quantityByIdsSelector = (state) => state.cart.quantityById
 
 const getProducts = (products, addedIds) => {
   const selectedProducts = _.filter(

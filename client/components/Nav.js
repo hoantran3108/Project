@@ -20,33 +20,49 @@ class Nav extends Component {
   }
 
   render(){
-    const user = (
-      <Menu.Menu position='right'>
-        <Dropdown item text='Account'>
-            <Dropdown.Menu>
-              <Dropdown.Item>English</Dropdown.Item>
-              <Dropdown.Item>Russian</Dropdown.Item>
-              <Dropdown.Item onClick={this.logout}>Log out</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-      </Menu.Menu>
-    )
-    const { activeItem } = this.state
-    const guest = (
-      <Menu.Menu position='right'>
-        <Menu.Item as={Link} to='/signup' name='signup' active={activeItem==='signup'} onClick={this.onClick}>Sign up</Menu.Item>
-        <Menu.Item as={Link} to='/login' name='login' active={activeItem==='login'} onClick={this.onClick}>Log in</Menu.Item>
-      </Menu.Menu>
-    )
+    const { total } = this.props
+    const cart =
+    <Menu.Item as={Link} to='/checkout' name='checkout' active={activeItem==='checkout'} onClick={this.onClick}>
+    <Icon name='shop' />
+    {total}
+  </Menu.Item>
+  const user = (
+    <Menu.Menu position='right'>
+      {cart}
+      <Dropdown item text='Account'>
+        <Dropdown.Menu>
+          <Dropdown.Item>English</Dropdown.Item>
+          <Dropdown.Item>Russian</Dropdown.Item>
+          <Dropdown.Item onClick={this.logout}>Log out</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Menu.Menu>
+  )
 
-    const { isAuthenticated } = this.props.user
-    return(
-      <Menu secondary>
-        <Menu.Item as={Link} to='/' name='home' active={activeItem==='home'} onClick={this.onClick}>Home</Menu.Item>
-        { isAuthenticated ? user : guest }
-      </Menu>
-    )
-  }
+  const { activeItem } = this.state
+
+  const guest = (
+    <Menu.Menu position='right'>
+      {cart}
+      <Menu.Item as={Link} to='/signup' name='signup' active={activeItem==='signup'} onClick={this.onClick}>
+      Sign up
+    </Menu.Item>
+    <Menu.Item as={Link} to='/login' name='login' active={activeItem==='login'} onClick={this.onClick}>
+    Log in
+  </Menu.Item>
+</Menu.Menu>
+)
+
+const { isAuthenticated } = this.props.user
+return(
+  <Menu secondary>
+    <Menu.Item as={Link} to='/' name='home' active={activeItem==='home'} onClick={this.onClick}>
+    Home
+  </Menu.Item>
+  { isAuthenticated ? user : guest }
+</Menu>
+)
+}
 }
 
 const mapStatetoProps = (state) => ({

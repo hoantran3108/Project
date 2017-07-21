@@ -5,7 +5,7 @@ import users from './reducers/users'
 import products from './reducers/products'
 import cart from './reducers/cart'
 import flashMessages from './reducers/flashMessages'
-import { loadCart } from './localStorage'
+import { loadState } from './localStorage'
 // import throttle from 'lodash/throttle' //import directly to avoid a bunch of unnescessary files in bundle.
 
 const configureStore = () => {
@@ -17,7 +17,7 @@ const configureStore = () => {
   })
 
   const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-  const persistedState = loadCart()
+  const persistedState = loadState()
 
   const store = createStore(
     rootReducer,

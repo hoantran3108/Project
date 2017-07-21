@@ -3,7 +3,7 @@ import config from '../config'
 import User from '../models/users'
 
 export default (req, res, next) => {
-  const authorizationHeader = req.headers['Authorization']
+  const authorizationHeader = req.headers['authorization']
   let token
 
   if (authorizationHeader) {

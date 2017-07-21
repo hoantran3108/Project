@@ -12,13 +12,13 @@ const requireAuth = (ComposedComponent) => {
         type: 'error',
         text: 'Log in to continue the process'
       })
-      this.context.router.history.push('/')
+      this.context.router.history.push('/login')
     }
   }
 
   componentWillUpdate(nextProps) {
     if (!this.props.isAuthenticated) {
-      this.context.router.history.push('/')
+      this.context.router.history.push('/login')
     }
   }
   render() {

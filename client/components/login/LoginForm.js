@@ -12,7 +12,8 @@ class LoginForm extends Component {
       username: '',
       password: '',
       errors: {},
-      isLoading: false
+      isLoading: false,
+      test: ''
     }
   }
 
@@ -50,16 +51,24 @@ class LoginForm extends Component {
     if (this.isValid()) {
       this.setState({ isLoading: true})
       this.props.login(this.state)
-      .then((res) => this.context.router.history.push('/'))
-      .catch((errors) => this.setState({ errors: errors.response.data || errors, isLoading: false}))
+      .then(res => {
+        this.props.removeAllMessages()
+        this.context.router.history.push('/')
+      })
+      .catch(errors => {
+        this.props.addFlashMessage({
+          type: 'error',
+          text: errors.response.data.form
+        })
+        this.setState({ errors: errors.response.data, isLoading: false})
+      })
     }
   }
 
   render() {
-    const { username, password, errors, isLoading} = this.state
+    const { username, password, errors, isLoading } = this.state
     return (
       <Form onSubmit={this.onSubmit} loading={isLoading}>
-      {errors.form && <div className="alert alert-danger">{errors.form}</div>}
       <TextField
       error={errors.username}
       label="Username"

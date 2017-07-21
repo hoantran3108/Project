@@ -1,8 +1,10 @@
-import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE } from '../actions/types'
+import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE, REMOVE_ALL_MESSAGES } from '../actions/types'
 import uuid from 'uuid'
 import _ from 'lodash'
 
-export default (state = [], action = {}) => {
+const initialState = []
+
+export default (state = initialState, action = {}) => {
   switch(action.type) {
     case ADD_FLASH_MESSAGE:
       return [
@@ -15,13 +17,14 @@ export default (state = [], action = {}) => {
       ]
     case DELETE_FLASH_MESSAGE:
       const index = _.findIndex(state, { id: action.id })
-      console.log(index)
       if(index >= 0) {
         return [
           ...state.slice(0, index),
           ...state.slice(index + 1)
         ]
       }
+    case REMOVE_ALL_MESSAGES:
+      return initialState
       return state
     default: return state
   }
