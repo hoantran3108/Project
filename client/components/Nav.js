@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../actions/loginAction'
-import { Menu, Dropdown, Icon } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon, Button, Input } from 'semantic-ui-react'
 
 class Nav extends Component {
-  constructor() {
-    super()
-    this.state = { activeItem: 'home' }
+  constructor(props) {
+    super(props)
+    this.state = { activeItem: props.location.pathname }
   }
 
   onClick = (e, { name }) => {
@@ -19,13 +20,10 @@ class Nav extends Component {
     this.props.logout()
   }
 
-  render(){
-    const { total } = this.props
-    const cart =
-    <Menu.Item as={Link} to='/checkout' name='checkout' active={activeItem==='checkout'} onClick={this.onClick}>
-    <Icon name='shop' />
-    {total}
-  </Menu.Item>
+  render() {
+    const { activeItem } = this.state
+    const cart = <Menu.Item as={Link} to='/checkout' name='/checkout' active={activeItem==='/checkout'} onClick={this.onClick}><Icon name='shopping bag' /></Menu.Item>
+
   const user = (
     <Menu.Menu position='right'>
       {cart}
@@ -39,29 +37,22 @@ class Nav extends Component {
     </Menu.Menu>
   )
 
-  const { activeItem } = this.state
-
   const guest = (
     <Menu.Menu position='right'>
       {cart}
-      <Menu.Item as={Link} to='/signup' name='signup' active={activeItem==='signup'} onClick={this.onClick}>
-      Sign up
-    </Menu.Item>
-    <Menu.Item as={Link} to='/login' name='login' active={activeItem==='login'} onClick={this.onClick}>
-    Log in
-  </Menu.Item>
-</Menu.Menu>
-)
+      <Menu.Item as={Link} to='/signup' name='/signup' active={activeItem==='/signup'} onClick={this.onClick}>Sign up</Menu.Item>
+      <Menu.Item as={Link} to='/login' name='/login' active={activeItem==='/login'} onClick={this.onClick}>Log in</Menu.Item>
+    </Menu.Menu>
+  )
 
-const { isAuthenticated } = this.props.user
-return(
-  <Menu secondary>
-    <Menu.Item as={Link} to='/' name='home' active={activeItem==='home'} onClick={this.onClick}>
-    Home
-  </Menu.Item>
-  { isAuthenticated ? user : guest }
-</Menu>
-)
+  const { isAuthenticated } = this.props.user
+
+  return(
+    <Menu secondary>
+      <Menu.Item as={Link} to='/' name='/' active={activeItem==='/'} onClick={this.onClick}>Home</Menu.Item>
+      {isAuthenticated ? user : guest}
+    </Menu>
+  )
 }
 }
 

@@ -1,7 +1,5 @@
 import axios from 'axios'
-import map from 'lodash/map'
-import { SET_PRODUCTS, ADD_TO_CART } from './types'
-import { saveState } from '../localStorage'
+import { SET_PRODUCTS } from './types'
 
 export const fetchProducts = () => (dispatch) => {
   axios.get('/api/products')
@@ -12,20 +10,3 @@ const setProducts = (products) => ({
   type: SET_PRODUCTS,
   products
 })
-
-const addToCart = (productId) => ({
-  type: ADD_TO_CART,
-  productId
-})
-
-export const addProductToCart = (productId) => (dispatch, getState) => {
-  map(getState().products.byId, product => {
-    if (product._id === productId && product.inventory > 0) {
-      dispatch(addToCart(productId))
-      saveState({
-        products: getState().products,
-        cart: getState().cart
-      })
-    }
-  })
-}

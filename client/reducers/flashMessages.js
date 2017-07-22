@@ -25,7 +25,6 @@ export default (state = initialState, action = {}) => {
       }
     case REMOVE_ALL_MESSAGES:
       return initialState
-      return state
     default: return state
   }
 }

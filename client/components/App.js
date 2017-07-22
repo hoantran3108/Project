@@ -5,14 +5,14 @@ import Main from './Main'
 import FlashMessagesList from './flash/FlashMessagesList'
 import { Container } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
-import { CartTotal } from '../selectors/SelectedProducts'
+import { CartTotal, SelectedProducts } from '../selectors/SelectedProducts'
 
 class App extends Component {
   render() {
     const { total } = this.props
     return (
       <Container>
-        <Nav total={total}/>
+        <Nav total={total} {...this.props}/>
         <FlashMessagesList />
         <Main />
       </Container>
@@ -21,6 +21,7 @@ class App extends Component {
 }
 
 const mapStatetoProps = (state) => ({
+  products: state.products.byId,
   total: CartTotal(state)
 })
 
