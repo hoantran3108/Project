@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT } from '../actions/types'
+import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../actions/types'
 import _ from 'lodash'
 
 const initialState = {
@@ -39,12 +39,17 @@ const quantityById = (state=initialState.quantityById, action) => {
         ...state,
         [action.productId]: (state[action.productId] || 0) + 1
       }
+      case UPDATE_CART:
+        return {
+          ...state,
+          [action.payload.productId]: (action.payload.quantity)
+        }
     case REMOVE_PRODUCTS:
       return initialState.quantityById
     case REMOVE_PRODUCT:
-      const array = _.filter(Object.keys(state), id => id!==action.productId)
+      const keys = _.filter(Object.keys(state), id => id!==action.productId)
       return {
-        ..._.pick(state, array)
+        ..._.pick(state, keys)
       }
     default:
       return state

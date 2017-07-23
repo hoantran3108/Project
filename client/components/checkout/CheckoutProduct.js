@@ -10,8 +10,9 @@ class CheckoutProduct extends Component {
   }
 
   changeQuantity = (e) => {
-    if (e.target.value > 0) {
+    if (e.target.value >= 0 && e.target.value<=100) {
       this.setState({[e.target.name]: e.target.value})
+      this.props.updateCart(this.props.product._id, e.target.value)
     }
   }
 
