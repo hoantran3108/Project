@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addFlashMessage } from '../actions/flashMessages'
 import PropTypes from 'prop-types'
+import { authenticateSelector } from '../selectors/SelectedUser'
 
 const requireAuth = (ComposedComponent) => {
   class Authenticate extends Component {
@@ -12,13 +13,13 @@ const requireAuth = (ComposedComponent) => {
         type: 'error',
         text: 'Log in to continue the process'
       })
-      this.context.router.history.push('/login')
+      this.props.history.push('/login')
     }
   }
 
   componentWillUpdate(nextProps) {
     if (!this.props.isAuthenticated) {
-      this.context.router.history.push('/login')
+      this.props.history.push('/login')
     }
   }
   render() {
@@ -28,12 +29,8 @@ const requireAuth = (ComposedComponent) => {
   }
 }
 const mapStatetoProps = (state) => ({
-    isAuthenticated: state.users.isAuthenticated
+    isAuthenticated: authenticateSelector(state)
 })
-
-Authenticate.contextTypes = {
-  router: PropTypes.object.isRequired
-}
 
 return connect(mapStatetoProps, { addFlashMessage })(Authenticate)
 }

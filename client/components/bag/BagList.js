@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { Redirect } from 'react-router-dom'
 import { SelectedProducts, quantityByIdsSelector } from '../../selectors/SelectedProducts'
-import CheckoutProduct from './CheckoutProduct'
+import BagProduct from './BagProduct'
 import { removeProduct, updateCart } from '../../actions/cartAction'
 import { Container, Table, Button, Icon, Message } from 'semantic-ui-react'
 
-class CheckoutList extends Component {
+class BagList extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,7 +24,7 @@ class CheckoutList extends Component {
   }
 
   redirectToShop = () => {
-    this.props.history.replace('/')
+    this.props.history.push('/')
   }
 
   updateCart = (id, quantity) => {
@@ -33,13 +34,21 @@ class CheckoutList extends Component {
       total + product.price*this.props.quantityByIds[product._id], 0)
       this.setState({total})
     })
-    .catch(err => this.setState({errors[field]: err}))
+    .catch(err => {
+      let errors = this.state.errors
+      errors['field'] = err
+      this.setState({errors})
+    })
+  }
+
+  checkout = () => {
+    this.props.history.push('/checkout')
   }
 
   render() {
     const { removeProduct } = this.props
     const products = _.map(this.props.products, product =>
-      <CheckoutProduct
+      <BagProduct
         key={product._id}
         product={product}
         quantityById={this.props.quantityByIds[product._id]}
@@ -114,4 +123,4 @@ const mapStatetoProps = (state) => ({
   quantityByIds: quantityByIdsSelector(state)
 })
 
-export default connect(mapStatetoProps, { removeProduct, updateCart })(CheckoutList)
+export default connect(mapStatetoProps, { removeProduct, updateCart })(BagList)

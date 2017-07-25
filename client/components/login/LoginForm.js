@@ -5,6 +5,7 @@ import FormButton from '../common/FormButton'
 import validateInput from '../../../server/shared/validations/login'
 import { Form } from 'semantic-ui-react'
 
+
 class LoginForm extends Component {
   constructor(props) {
     super(props)
@@ -12,8 +13,7 @@ class LoginForm extends Component {
       username: '',
       password: '',
       errors: {},
-      isLoading: false,
-      test: ''
+      isLoading: false
     }
   }
 
@@ -53,7 +53,7 @@ class LoginForm extends Component {
       this.props.login(this.state)
       .then(res => {
         this.props.removeAllMessages()
-        this.context.router.history.push('/')
+        this.props.history.push('/')
       })
       .catch(errors => {
         this.props.addFlashMessage({
@@ -69,31 +69,27 @@ class LoginForm extends Component {
     const { username, password, errors, isLoading } = this.state
     return (
       <Form onSubmit={this.onSubmit} loading={isLoading}>
-      <TextField
-      error={errors.username}
-      label="Username"
-      field="username"
-      value={username}
-      onChange={this.onChange}
-      onBlur={this.onBlur}
-      />
-      <TextField
-      error={errors.password}
-      label="Password"
-      field="password"
-      value={password}
-      onChange={this.onChange}
-      onBlur={this.onBlur}
-      type="password"
-      />
-      <FormButton value="Log in" disabled={isLoading} />
-    </Form>
-      )
+        <TextField
+          error={errors.username}
+          label="Username"
+          field="username"
+          value={username}
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+        />
+        <TextField
+          error={errors.password}
+          label="Password"
+          field="password"
+          value={password}
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+          type="password"
+        />
+        <FormButton value="Log in" disabled={isLoading} />
+      </Form>
+    )
   }
-}
-
-LoginForm.contextTypes = {
-  router: PropTypes.object.isRequired
 }
 
 export default LoginForm

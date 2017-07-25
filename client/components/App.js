@@ -5,14 +5,17 @@ import Main from './Main'
 import FlashMessagesList from './flash/FlashMessagesList'
 import { Container } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
+import { logout } from '../actions/loginAction'
 import { CartTotal, SelectedProducts } from '../selectors/SelectedProducts'
+import { authenticateSelector } from '../selectors/SelectedUser'
 
 class App extends Component {
+  
   render() {
-    const { total } = this.props
+    const { total, logout } = this.props
     return (
       <Container>
-        <Nav total={total} {...this.props}/>
+        <Nav total={total} logout={() => logout()} {...this.props} />
         <FlashMessagesList />
         <Main />
       </Container>
@@ -21,8 +24,9 @@ class App extends Component {
 }
 
 const mapStatetoProps = (state) => ({
-  products: state.products.byId,
+  isAuthenticated: authenticateSelector(state),
+  products: SelectedProducts(state),
   total: CartTotal(state)
 })
 
-export default withRouter(connect(mapStatetoProps)(App))
+export default withRouter(connect(mapStatetoProps, { logout })(App))

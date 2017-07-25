@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Image, Button, Input } from 'semantic-ui-react'
 
-class CheckoutProduct extends Component {
+class BagProduct extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -46,4 +46,4 @@ class CheckoutProduct extends Component {
   }
 }
 
-export default CheckoutProduct
+export default BagProduct

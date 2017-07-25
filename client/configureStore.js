@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
-import users from './reducers/users'
+import user from './reducers/user'
 import products from './reducers/products'
 import cart from './reducers/cart'
 import flashMessages from './reducers/flashMessages'
@@ -11,7 +11,7 @@ import { loadState } from './localStorage'
 const configureStore = () => {
   const rootReducer = combineReducers({
     flashMessages,
-    users,
+    user,
     products,
     cart
   })

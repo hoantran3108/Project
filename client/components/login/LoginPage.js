@@ -12,6 +12,7 @@ class LoginPage extends Component {
         login={login}
         addFlashMessage={addFlashMessage}
         removeAllMessages={removeAllMessages}
+        {...this.props}
       />
     )
   }
