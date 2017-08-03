@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
-import { Menu, Dropdown, Icon, Button, Input } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon } from 'semantic-ui-react'
+import SearchBar from './navbar/SearchBar'
+import { searchProducts } from '../actions/productAction'
 
 class Nav extends Component {
   constructor(props) {
@@ -12,14 +15,16 @@ class Nav extends Component {
   componentWillReceiveProps = (nextProps) => {
     this.setState({ activeItem: nextProps.location.pathname })
   }
-  
+
   onClick = (e, { name }) => {
     this.setState({ activeItem: name})
   }
 
   render() {
-    const { activeItem } = this.state
-    const cart = <Menu.Item
+    const { activeItem, isLoading, value } = this.state
+    const { searchProducts, logout, isAuthenticated } = this.props
+    const cart =
+    <Menu.Item
       as={Link}
       to='/shoppingbag'
       name='/shoppingbag'
@@ -27,22 +32,27 @@ class Nav extends Component {
       onClick={this.onClick}>
       <Icon name='shopping bag' />
     </Menu.Item>
+    const search =
+    <Menu.Item>
+      <SearchBar searchProducts={searchProducts} {...this.props}/>
+    </Menu.Item>
 
-    const user = (
-      <Menu.Menu position='right'>
-        {cart}
-        <Dropdown item text='Account'>
-          <Dropdown.Menu>
-            <Dropdown.Item>English</Dropdown.Item>
-            <Dropdown.Item>Russian</Dropdown.Item>
-            <Dropdown.Item onClick={this.props.logout}>Log out</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu.Menu>
-    )
+    const user =
+    <Menu.Menu position='right'>
+      {search}
+      {cart}
+      <Dropdown item text='Account'>
+        <Dropdown.Menu>
+          <Dropdown.Item>English</Dropdown.Item>
+          <Dropdown.Item>Russian</Dropdown.Item>
+          <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Menu.Menu>
 
     const guest = (
       <Menu.Menu position='right'>
+        {search}
         {cart}
         <Menu.Item
           as={Link}
@@ -76,10 +86,10 @@ class Nav extends Component {
           onClick={this.onClick}>
           Home
         </Menu.Item>
-        {this.props.isAuthenticated ? user : guest}
+        {isAuthenticated ? user : guest}
       </Menu>
     )
   }
 }
 
-export default Nav
+export default connect(null, { searchProducts })(Nav)

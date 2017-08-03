@@ -13,18 +13,18 @@ class Modal extends Component {
     return (
       <Container>
         <div
-        onClick={this.back}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          background: 'rgba(0, 0, 0, 0.15)'
-        }}
-      >
+          onClick={this.back}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            background: 'rgba(0, 0, 0, 0.15)'
+          }}>
+        </div>
         <div className='modal' style={{
-        position: 'absolute',
+          position: 'absolute',
           background: '#fff',
           top: 25,
           left: '10%',
@@ -34,10 +34,9 @@ class Modal extends Component {
         }}>
         <LoginPage />
       </div>
-    </div>
-      </Container>
-    )
-  }
+    </Container>
+  )
+}
 }
 
 export default Modal

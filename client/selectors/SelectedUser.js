@@ -1,4 +1,4 @@
 import { createSelector } from 'reselect'
-import _ from 'lodash'
 
-export const authenticateSelector = (state) => state.user.isAuthenticated
+export const authenticateSelector = (state) => state.get('user').toJS().isAuthenticated
+export const userSelector = (state) => state.getIn(['user','user']).toJS()

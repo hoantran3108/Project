@@ -18,10 +18,8 @@ class FlashMessagesList extends Component {
   }
 }
 
-function mapStatetoProps(state) {
-  return {
-    messages: state.flashMessages
-  }
-}
+const mapStatetoProps = (state) => ({
+    messages: state.get('flashMessages').toJS()
+})
 
 export default connect(mapStatetoProps, { deleteFlashMessage })(FlashMessagesList)

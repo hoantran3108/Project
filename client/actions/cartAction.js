@@ -1,7 +1,8 @@
 import axios from 'axios'
 import _ from 'lodash'
 import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from './types'
-import { saveState } from '../localStorage'
+import { saveCart } from '../localStorage'
+import { productsSelector, cartSelector } from '../selectors/SelectedProducts'
 
 const addToCart = (productId) => ({
   type: ADD_TO_CART,
@@ -23,12 +24,12 @@ const removeProductFromCart = (productId) => ({
 })
 
 export const addProductToCart = (productId) => (dispatch, getState) => {
-  _.map(getState().products.byId, product => {
+  _.map(productsSelector(getState()), product => {
     if (product._id === productId && product.inventory > 0) {
       dispatch(addToCart(productId))
-      saveState({
-        products: getState().products,
-        cart: getState().cart
+      saveCart({
+        products: productsSelector(getState()),
+        cart: cartSelector(getState())
       })
     }
   })
@@ -38,9 +39,9 @@ export const updateCart = (productId, quantity) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     if (quantity>0) {
       dispatch(updateQuantityCart({productId, quantity}))
-      saveState({
-        products: getState().products,
-        cart: getState().cart
+      saveCart({
+        products: productsSelector(getState()),
+        cart: cartSelector(getState())
       })
       resolve()
     }
@@ -50,13 +51,13 @@ export const updateCart = (productId, quantity) => (dispatch, getState) => {
 
 export const removeProducts = () => (dispatch) => {
   dispatch(removeProductsFromCart())
-  localStorage.removeItem('state')
+  localStorage.removeItem('cart')
 }
 
 export const removeProduct = (productId) => (dispatch, getState) => {
   dispatch(removeProductFromCart(productId))
-  saveState({
-    products: getState().products,
-    cart: getState().cart
+  saveCart({
+    products: productsSelector(getState()),
+    cart: cartSelector(getState())
   })
 }

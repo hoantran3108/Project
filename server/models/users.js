@@ -4,6 +4,14 @@ import bcrypt from 'bcrypt'
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
+  firstname: {
+    type: String,
+    require: true
+  },
+  lastname: {
+    type: String,
+    require: true,
+  },
   username: {
     type: String,
     lowercase: true,
@@ -16,10 +24,7 @@ const userSchema = new Schema({
     require: true,
     unique: true
   },
-  telephone: {
-    type: Number,
-    require: true
-  },
+  telephone: Number,
   address: String,
   password: {
     type: String,

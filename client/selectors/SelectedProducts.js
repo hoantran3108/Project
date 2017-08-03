@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
 
-const productsSelector = (state) => state.products.byId
-const addedIdsSelector = (state) => state.cart.addedIds
-export const quantityByIdsSelector = (state) => state.cart.quantityById
+export const productsSelector = (state) => state.get('products').toJS()
+const addedIdsSelector = (state) => state.getIn(['cart','addedIds']).toJS()
+export const quantityByIdsSelector = (state) => state.getIn(['cart','quantityById']).toJS()
+export const cartSelector = (state) => state.get('cart').toJS()
 
 const getProducts = (products, addedIds) => {
   const selectedProducts = _.filter(

@@ -4,8 +4,8 @@ import { generateToken } from '../services/token'
 
 export function signup(req, res) {
   const { errors, isValid } = validateInput(req.body)
-  if(isValid) {
-    const { username, email, telephone, address, password } = req.body
+  if (isValid) {
+    const { firstname, lastname, username, email, telephone, address, password } = req.body
 
     User.findOne({ $or: [ { email: email.toLowerCase() }, { username: username.toLowerCase() }]},'username email', function(err, existingUser) {
       if (err) {
@@ -15,6 +15,8 @@ export function signup(req, res) {
         return res.status(422).send({email: 'Email is in use'})
       }
       const user = new User({
+        firstname,
+        lastname,
         username,
         email,
         telephone,
@@ -23,20 +25,20 @@ export function signup(req, res) {
       })
       user.save(function(err, savedUser) {
       if (err) {
+        console.log(err)
         return res.status(500).json(err)
       }
       if (savedUser) {
         const token = generateToken(savedUser)
         res.json({token})
-      }
-      })
+      }})
     })
   } else {
     return res.status(400).json(errors)
   }
 }
 
-export function checkUserExists(req, res) {
+export const checkUserExists = (req, res) => {
   User.findOne({ $or: [ { email: req.params.identifier.toLowerCase() },
     { username: req.params.identifier.toLowerCase() }]},'username email', function(err, existingUser) {
       if (err || !existingUser) {
@@ -48,7 +50,7 @@ export function checkUserExists(req, res) {
 })
 }
 
-export function authentication(req, res) {
+export const authentication = (req, res) => {
   const { username, password } = req.body
   User.findOne({ username: username.toLowerCase() },(err, user) => {
     if (err || !user) {

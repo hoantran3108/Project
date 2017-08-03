@@ -4,11 +4,15 @@ import config from '../config'
 
 export function generateToken(user) {
   const timeStamp = new Date().getTime()
-  const { _id, username, email } = user
+  const { firstname, lastname, _id, username, email, telephone, address } = user
   const payload = {
-    _id: _id,
-    username: username,
-    email: email
+    _id,
+    firstname,
+    lastname,
+    username,
+    email,
+    telephone,
+    address
   }
   return jwt.sign(payload,config.jwtSecret)
 }

@@ -1,56 +1,59 @@
 import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../actions/types'
-import _ from 'lodash'
+import { Map, List } from 'immutable'
 
-const initialState = {
-  addedIds: [],
-  quantityById: {}
-}
+const initialState = Map({
+  addedIds: List([]),
+  quantityById: Map({})
+})
 
-const addedIds = (state=initialState.addedIds, action) => {
+const addedIds = (state = initialState.get('addedIds'), action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      if (state.indexOf(action.productId) !== -1) {
+      if (state.toJS().indexOf(action.productId) !== -1) {
         return state
       }
-      return [
-        ...state,
-        action.productId
-      ]
+        return state.push(action.productId) // [ ...state, action.productId]
+
     case REMOVE_PRODUCTS:
-      return initialState.addedIds
+      return initialState.get('addedIds')
+
     case REMOVE_PRODUCT:
-      const index = _.indexOf(state, action.productId)
+      const index = state.toJS().indexOf(action.productId)
       if (index >=0) {
-        return [
-          ...state.slice(0, index),
-          ...state.slice(index +1)
-        ]
+        // return [
+        //   ...state.slice(0, index),
+        //   ...state.slice(index +1)
+        // ]
+        return state.delete(index)
       }
     default:
       return state
-
   }
 }
 
-const quantityById = (state=initialState.quantityById, action) => {
+const quantityById = (state = initialState.get('quantityById'), action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      return {
-        ...state,
-        [action.productId]: (state[action.productId] || 0) + 1
-      }
+      // return {
+      //   ...state,
+      //   [action.productId]: (state[action.productId] || 0) + 1
+      // }
+      return state.update(action.productId, (quantity=0) => quantity+1)
       case UPDATE_CART:
-        return {
-          ...state,
-          [action.payload.productId]: (action.payload.quantity)
-        }
+        // return {
+        //   ...state,
+        //   [action.payload.productId]: (action.payload.quantity)
+        // }
+      const { productId, quantity } = action.payload
+      return state.update(productId, newQuantity => quantity)
     case REMOVE_PRODUCTS:
-      return initialState.quantityById
+      return initialState.get('quantityById')
     case REMOVE_PRODUCT:
-      const keys = _.filter(Object.keys(state), id => id!==action.productId)
-      return {
-        ..._.pick(state, keys)
-      }
+      // const keys = _.filter(Object.keys(state), id => id!==action.productId)
+      // return {
+      //   ..._.pick(state, keys)
+      // }
+      return state.delete(action.productId)
     default:
       return state
   }
@@ -59,10 +62,11 @@ const quantityById = (state=initialState.quantityById, action) => {
 const cart = (state=initialState, action) => {
   switch (action.type) {
     default:
-      return {
-        addedIds: addedIds(state.addedIds, action),
-        quantityById: quantityById(state.quantityById, action)
-      }
+      let initialCart = Map({
+        addedIds: addedIds(state.get('addedIds'), action),
+        quantityById: quantityById(state.get('quantityById'), action)
+      })
+      return state.merge(initialCart)
   }
 }
 

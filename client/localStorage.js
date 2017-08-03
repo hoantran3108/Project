@@ -31,10 +31,10 @@ export const saveCart = (state) => {
 export const loadCart = () => {
   try {
     const serializedCart = localStorage.getItem('cart')
-    if (serializedCart) {
-      return JSON.parse(serializedCart)
+    if (serializedCart === null) {
+      return undefined
     }
-    return undefined
+    return JSON.parse(serializedCart)
   } catch (err) {
     return undefined
   }

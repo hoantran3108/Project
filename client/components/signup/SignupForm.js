@@ -10,10 +10,13 @@ class SignupForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      firstname: '',
+      lastname: '',
       username: '',
       email: '',
       telephone: '',
       address: '',
+      city: '',
       password: '',
       passwordconfirmation: '',
       errors: {},
@@ -24,7 +27,9 @@ class SignupForm extends Component {
   onBlur = (e) => {
     let field = e.target.name
     let errors = this.state.errors
-    if (e.target.value === '') {
+    if (e.target.value === ''
+    && e.target.name !== 'telephone'
+    && e.target.name !== 'address') {
       errors[field] = 'Required'
       this.setState({ errors })
     }
@@ -43,7 +48,7 @@ class SignupForm extends Component {
 
   isValid() {
     const { isValid, errors } = validateInput(this.state)
-    console.log(errors)
+
     if(!isValid) {
       return this.setState({ errors })
     }
@@ -52,33 +57,63 @@ class SignupForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    if(this.isValid()){
+    if (this.isValid()) {
+      const { userSignup, addFlashMessage } = this.props
       this.setState({errors: {}, isLoading: true })
-      this.props.userSignup(this.state)
-      .then((res) => {
-        console.log('test')
-        this.props.addFlashMessage({
+      userSignup(this.state)
+      .then(() => {
+        addFlashMessage({
           type: 'success',
           text: 'Signed up successfully'
         })
         this.context.router.history.push('/')})
       .catch(errors => {
-        this.props.addFlashMessage({
+        addFlashMessage({
           type: 'error',
           text: 'Sign up failed'
         })
-      this.setState({ errors: errors.response.data || errors, isLoading: false })
+      this.setState({ errors, isLoading: false })
     })
     }
   }
 
   render() {
-    const { username, email, telephone, address, password, passwordconfirmation, errors, isLoading } = this.state
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      telephone,
+      address,
+      password,
+      passwordconfirmation,
+      errors,
+      isLoading
+    } = this.state
     return (
       <Form onSubmit={this.onSubmit} loading={isLoading}>
+        <Form.Group widths='equal'>
+          <TextField
+            error={errors.firstname}
+            label="Firstname*"
+            field="firstname"
+            value={firstname}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+          <TextField
+            error={errors.lastname}
+            label="Lastname*"
+            field="lastname"
+            value={lastname}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+        </Form.Group>
+        <Form.Group widths='equal'>
         <TextField
           error={errors.username}
-          label="Username"
+          label="Username*"
           field="username"
           value={username}
           onChange={this.onChange}
@@ -86,12 +121,34 @@ class SignupForm extends Component {
         />
         <TextField
           error={errors.email}
-          label="Email"
+          label="Email*"
           field="email"
           value={email}
           onChange={this.onChange}
           onBlur={this.onBlur}
         />
+      </Form.Group>
+      <Form.Group widths='equal'>
+         <TextField
+          error={errors.password}
+          label="Password*"
+          field="password"
+          value={password}
+          type="password"
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+        />
+        <TextField
+          error={errors.passwordconfirmation}
+          label="Password Confirmation*"
+          field="passwordconfirmation"
+          value={passwordconfirmation}
+          type="password"
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+        />
+      </Form.Group>
+        <Form.Group widths='equal'>
          <TextField
           error={errors.telephone}
           label="Telephone"
@@ -109,24 +166,7 @@ class SignupForm extends Component {
           onChange={this.onChange}
           onBlur={this.onBlur}
         />
-         <TextField
-          error={errors.password}
-          label="Password"
-          field="password"
-          value={password}
-          type="password"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-        <TextField
-          error={errors.passwordconfirmation}
-          label="Password Confirmation"
-          field="passwordconfirmation"
-          value={passwordconfirmation}
-          type="password"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
+      </Form.Group>
         <FormButton value="Sign up" disabled={isLoading} />
       </Form>
       )

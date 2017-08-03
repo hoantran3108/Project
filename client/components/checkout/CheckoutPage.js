@@ -1,36 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Divider } from 'semantic-ui-react'
-import StepExampleLinks from './CheckoutStep'
+import CheckoutStep from './CheckoutStep'
 import CheckoutProcess from './CheckoutProcess'
+import { setActiveItem, toggleProcess } from '../../actions/stepAction'
 
 class CheckoutPage extends Component {
-  constructor() {
-    super()
-    this.state = {
-      isActive: '',
-      isCompleted: {}
-     }
-  }
-
-  isActive = (isActive) => {
-    this.setState({ isActive })
-  }
-
-  isCompleted = (isCompleted) => {
-    this.setState({ isCompleted })
-  }
 
   render() {
-    const { isActive, isCompleted } = this.state
+    const { setActiveItem, toggleProcess, activeItem, isCompleted } = this.props
     return (
       <Container>
-        <StepExampleLinks isActive={isActive} isCompleted={isCompleted} />
+        <CheckoutStep activeItem={activeItem} isCompleted={isCompleted} />
         <Divider />
-        <CheckoutProcess isActive={this.isActive} isCompleted={this.isCompleted} />
+        <CheckoutProcess {...this.props} />
       </Container>
     )
   }
 }
 
-export default CheckoutPage
+const mapStatetoProps = (state) => ({
+  activeItem: state.step.activeItem,
+  isCompleted: state.step.isCompleted
+})
+
+export default connect(mapStatetoProps,{ setActiveItem, toggleProcess })(CheckoutPage)

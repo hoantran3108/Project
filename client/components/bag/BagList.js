@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
-import { SelectedProducts, quantityByIdsSelector } from '../../selectors/SelectedProducts'
+import { SelectedProducts, quantityByIdsSelector, CartTotal } from '../../selectors/SelectedProducts'
 import BagProduct from './BagProduct'
 import { removeProduct, updateCart } from '../../actions/cartAction'
+import { removeAllMessages } from '../../actions/flashMessages'
 import { Container, Table, Button, Icon, Message } from 'semantic-ui-react'
 
 class BagList extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       total: null,
       errors: {}
@@ -18,9 +19,8 @@ class BagList extends Component {
   }
 
   componentWillMount = () => {
-    let total = this.props.products.reduce((total, product) =>
-    total + product.price*this.props.quantityByIds[product._id], 0)
-    this.setState({total})
+    const { total } = this.props
+    this.setState({ total })
   }
 
   redirectToShop = () => {
@@ -28,11 +28,10 @@ class BagList extends Component {
   }
 
   updateCart = (id, quantity) => {
-    this.props.updateCart(id, quantity)
+    const { updateCart, total } = this.props
+    updateCart(id, quantity)
     .then(() => {
-      let total = this.props.products.reduce((total, product) =>
-      total + product.price*this.props.quantityByIds[product._id], 0)
-      this.setState({total})
+      this.setState({ total })
     })
     .catch(err => {
       let errors = this.state.errors
@@ -42,7 +41,9 @@ class BagList extends Component {
   }
 
   checkout = () => {
-    this.props.history.push('/checkout')
+    const { removeAllMessages, history } = this.props
+    removeAllMessages()
+    history.push('/checkout')
   }
 
   render() {
@@ -120,7 +121,8 @@ class BagList extends Component {
 
 const mapStatetoProps = (state) => ({
   products: SelectedProducts(state),
-  quantityByIds: quantityByIdsSelector(state)
+  quantityByIds: quantityByIdsSelector(state),
+  total: CartTotal(state)
 })
 
-export default connect(mapStatetoProps, { removeProduct, updateCart })(BagList)
+export default connect(mapStatetoProps, { removeProduct, updateCart, removeAllMessages })(BagList)

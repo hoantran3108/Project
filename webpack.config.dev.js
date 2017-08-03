@@ -26,7 +26,15 @@ export default {
           path.join(__dirname,'client'),
           path.join(__dirname,'server/shared')
         ],
-        loaders: ['babel-loader']
+        use: ['babel-loader']
+      },
+      {
+        test:/\.css$/,
+        include: path.join(__dirname,'client/public'),
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   },

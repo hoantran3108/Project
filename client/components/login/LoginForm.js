@@ -47,20 +47,25 @@ class LoginForm extends Component {
   }
 
   onSubmit = (e) => {
+    const { removeAllMessages, addFlashMessage, history, login } = this.props
     e.preventDefault()
     if (this.isValid()) {
       this.setState({ isLoading: true})
-      this.props.login(this.state)
+      login(this.state)
       .then(res => {
-        this.props.removeAllMessages()
-        this.props.history.push('/')
+        removeAllMessages()
+        addFlashMessage({
+          type: 'success',
+          text: 'Loged in successfully'
+        })
       })
       .catch(errors => {
-        this.props.addFlashMessage({
+        removeAllMessages()
+        addFlashMessage({
           type: 'error',
           text: errors.response.data.form
         })
-        this.setState({ errors: errors.response.data, isLoading: false})
+        this.setState({ errors, isLoading: false})
       })
     }
   }
