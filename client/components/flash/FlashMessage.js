@@ -1,20 +1,13 @@
-import React, { Component } from 'react'
-import classNames from 'classnames'
+import React from 'react'
 import { Message } from 'semantic-ui-react'
 
-class FlashMessage extends Component {
-
-  render() {
-    const { id, type, text } = this.props.message
-    return (
-      <Message
-        success={type==='success'}
-        negative={type==='error'}
-        header={text}
-        onDismiss={this.props.deleteFlashMessage}
-      />
-    )
-  }
-}
+const FlashMessage = ({ id, type, text, deleteFlashMessage }) => (
+  <Message
+    success={type==='success'}
+    negative={type==='error'}
+    header={text}
+    onDismiss={deleteFlashMessage}
+  />
+)
 
 export default FlashMessage

@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 import { Grid, Container, Message } from 'semantic-ui-react'
 import { productsSelector } from '../../selectors/SelectedProducts'
+import { singleProduct } from '../../actions/productAction'
 
 class SinglePage extends Component {
+
+  componentDidMount = () => {
+    const { singleProduct, match } = this.props
+    singleProduct(match.params.id)
+  }
 
   render() {
     const { match, products } = this.props
     const product = _.filter(products, product =>
       product._id===match.params.id)
 
-      const singleProduct =
+      const singleProduct = (!isEmpty(product) ?
       <Grid>
         <Grid.Column width={4}>
           {product[0]._id}
@@ -19,7 +25,7 @@ class SinglePage extends Component {
         <Grid.Column width={9}>
           {product[0].name}
         </Grid.Column>
-      </Grid>
+      </Grid> : null)
 
       const notFound =
       <Message negative size='massive'>
@@ -27,7 +33,7 @@ class SinglePage extends Component {
       </Message>
       return (
         <Container>
-          {_.isEmpty(product) ? notFound :singleProduct}
+          {isEmpty(product) ? notFound :singleProduct}
         </Container>
       )
     }
@@ -37,4 +43,4 @@ class SinglePage extends Component {
     products: productsSelector(state)
   })
 
-  export default connect(mapStatetoProps)(SinglePage)
+  export default connect(mapStatetoProps, { singleProduct })(SinglePage)

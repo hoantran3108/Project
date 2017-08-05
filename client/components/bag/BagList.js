@@ -7,20 +7,15 @@ import { SelectedProducts, quantityByIdsSelector, CartTotal } from '../../select
 import BagProduct from './BagProduct'
 import { removeProduct, updateCart } from '../../actions/cartAction'
 import { removeAllMessages } from '../../actions/flashMessages'
-import { Container, Table, Button, Icon, Message } from 'semantic-ui-react'
+import { Container, Table, Button, Icon, Message, Header, Modal } from 'semantic-ui-react'
 
 class BagList extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      total: null,
+      total: props.total,
       errors: {}
     }
-  }
-
-  componentWillMount = () => {
-    const { total } = this.props
-    this.setState({ total })
   }
 
   redirectToShop = () => {
@@ -28,9 +23,10 @@ class BagList extends Component {
   }
 
   updateCart = (id, quantity) => {
-    const { updateCart, total } = this.props
+    const { updateCart } = this.props
     updateCart(id, quantity)
     .then(() => {
+      const { total } = this.props
       this.setState({ total })
     })
     .catch(err => {
@@ -73,50 +69,58 @@ class BagList extends Component {
       <Table.Footer fullWidth>
         <Table.Row>
           <Table.HeaderCell>
-            <Button onClick={this.props.removeProducts}>
-              Remove All
-            </Button>
-          </Table.HeaderCell>
-          <Table.HeaderCell colSpan='4'>
-            <Button
-              floated='right'
-              color='green'
-              onClick={this.checkout}
-              >Check out
-            </Button>
-            <Button
-              icon='shop'
-              label={{ as: 'a', basic: true, content: 'Continue' }}
-              labelPosition='right'
-              onClick={this.redirectToShop}
-            />
-          </Table.HeaderCell>
-          <Table.HeaderCell>
-            {this.state.total}
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Footer>
-    </Table>
+            <Modal trigger={<Button>Remove All</Button>} size='small'>
+            <Header content='Archive Old Messages' />
+            <Modal.Actions>
+              <Button color='red' inverted>
+                <Icon name='remove' /> No
+              </Button>
+              <Button color='green' inverted onClick={this.props.removeProducts}>
+                <Icon name='checkmark' /> Yes
+              </Button>
+            </Modal.Actions>
+          </Modal>
+        </Table.HeaderCell>
+        <Table.HeaderCell colSpan='4'>
+          <Button
+            floated='right'
+            color='green'
+            onClick={this.checkout}
+            >Check out
+          </Button>
+          <Button
+            icon='shop'
+            label={{ as: 'a', basic: true, content: 'Continue' }}
+            labelPosition='right'
+            onClick={this.redirectToShop}
+          />
+        </Table.HeaderCell>
+        <Table.HeaderCell>
+          {this.state.total}
+        </Table.HeaderCell>
+      </Table.Row>
+    </Table.Footer>
+  </Table>
 
-    const emptyCart =
-    <Message negative size='massive'>
-      <Message.Header>Oops! There are no products in your bag. Please add some
-        <Button animated='fade' floated='right' onClick={this.redirectToShop}>
-          <Button.Content visible>
-            <Icon name='shop' />
-          </Button.Content>
-          <Button.Content hidden>
-            Shop
-          </Button.Content>
-        </Button>
-      </Message.Header>
-    </Message>
-    return (
-      <Container>
-        {_.isEmpty(this.props.products) ? emptyCart : checkoutCart}
-      </Container>
-    )
-  }
+  const emptyCart =
+  <Message negative size='massive'>
+    <Message.Header>Oops! There are no products in your bag. Please add some
+      <Button animated='fade' floated='right' onClick={this.redirectToShop}>
+        <Button.Content visible>
+          <Icon name='shop' />
+        </Button.Content>
+        <Button.Content hidden>
+          Shop
+        </Button.Content>
+      </Button>
+    </Message.Header>
+  </Message>
+  return (
+    <Container>
+      {_.isEmpty(this.props.products) ? emptyCart : checkoutCart}
+    </Container>
+  )
+}
 }
 
 const mapStatetoProps = (state) => ({

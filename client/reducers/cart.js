@@ -7,66 +7,69 @@ const initialState = Map({
 })
 
 const addedIds = (state = initialState.get('addedIds'), action) => {
+
   switch (action.type) {
     case ADD_TO_CART:
-      if (state.toJS().indexOf(action.productId) !== -1) {
-        return state
-      }
-        return state.push(action.productId) // [ ...state, action.productId]
+    if (state.toJS().indexOf(action.productId) !== -1) {
+      return state
+    }
+    return state.push(action.productId)
 
     case REMOVE_PRODUCTS:
-      return initialState.get('addedIds')
+    return initialState.get('addedIds')
 
     case REMOVE_PRODUCT:
-      const index = state.toJS().indexOf(action.productId)
-      if (index >=0) {
-        // return [
-        //   ...state.slice(0, index),
-        //   ...state.slice(index +1)
-        // ]
-        return state.delete(index)
-      }
+    const index = state.toJS().indexOf(action.productId)
+    if (index >=0) {
+      return state.delete(index)
+    }
     default:
-      return state
+    return state
   }
 }
 
 const quantityById = (state = initialState.get('quantityById'), action) => {
+
   switch (action.type) {
     case ADD_TO_CART:
-      // return {
-      //   ...state,
-      //   [action.productId]: (state[action.productId] || 0) + 1
-      // }
-      return state.update(action.productId, (quantity=0) => quantity+1)
-      case UPDATE_CART:
-        // return {
-        //   ...state,
-        //   [action.payload.productId]: (action.payload.quantity)
-        // }
-      const { productId, quantity } = action.payload
-      return state.update(productId, newQuantity => quantity)
+    // return {
+    //   ...state,
+    //   [action.productId]: (state[action.productId] || 0) + 1
+    // }
+    return state.update(action.productId, (quantity=0) => quantity+1)
+    
+    case UPDATE_CART:
+    // return {
+    //   ...state,
+    //   [action.payload.productId]: (action.payload.quantity)
+    // }
+    const { productId, quantity } = action.payload
+    return state.update(productId, newQuantity => quantity)
+
     case REMOVE_PRODUCTS:
-      return initialState.get('quantityById')
+    return initialState.get('quantityById')
+
     case REMOVE_PRODUCT:
-      // const keys = _.filter(Object.keys(state), id => id!==action.productId)
-      // return {
-      //   ..._.pick(state, keys)
-      // }
-      return state.delete(action.productId)
+    // const keys = _.filter(Object.keys(state), id => id!==action.productId)
+    // return {
+    //   ..._.pick(state, keys)
+    // }
+    return state.delete(action.productId)
+
     default:
-      return state
+    return state
   }
 }
 
 const cart = (state=initialState, action) => {
+
   switch (action.type) {
     default:
-      let initialCart = Map({
-        addedIds: addedIds(state.get('addedIds'), action),
-        quantityById: quantityById(state.get('quantityById'), action)
-      })
-      return state.merge(initialCart)
+    let initialCart = Map({
+      addedIds: addedIds(state.get('addedIds'), action),
+      quantityById: quantityById(state.get('quantityById'), action)
+    })
+    return state.merge(initialCart)
   }
 }
 

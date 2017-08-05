@@ -41,20 +41,19 @@ class ProductsList extends Component {
   }
 
   render() {
+    const { isLoading, isActivated } = this.state
     const { products } = this.props
     const items = products.map(product => <Product key={product._id} product={product} addtoCart={this.addtoCart} />)
-
-      const { isLoading, isActivated } = this.state
-      return (
-        <Card.Group>
-          {items}
-          {isActivated ? <Button onClick={this.loadMore}>Load more</Button> : null}
-          <Dimmer active={isLoading} inverted>
-            <Loader inverted />
-          </Dimmer>
-        </Card.Group>
-      )
-    }
+    return (
+      <Card.Group>
+        {items}
+        {isActivated ? <Button onClick={this.loadMore}>Load more</Button> : null}
+        <Dimmer active={isLoading} inverted>
+          <Loader inverted />
+        </Dimmer>
+      </Card.Group>
+    )
   }
+}
 
-  export default connect(null, { fetchProducts, addProductToCart, addFlashMessage, removeAllMessages })(ProductsList)
+export default connect(null, { fetchProducts, addProductToCart, addFlashMessage, removeAllMessages })(ProductsList)

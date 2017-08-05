@@ -17,3 +17,7 @@ const setProducts = (products) => ({
 export const searchProducts = (value) => (dispatch) => {
   return axios.get(`/api/products?name=${value}`)
 }
+
+export const singleProduct = (id) => (dispatch) => {
+  return axios.get(`/api/products/${id}`)
+}

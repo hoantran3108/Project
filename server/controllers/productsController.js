@@ -1,12 +1,23 @@
 import Product from '../models/products'
 
 export const getProducts = (req, res) => {
-  Product.find({name: new RegExp(req.query.name, 'i')}, (err, products) => {
+  Product.find({ name: new RegExp(req.query.name, 'i')}, (err, products) => {
     if (err) {
       return res.status(500).json({ errors: err})
     }
     res.json({products})
   }).skip(parseInt(req.query.total)).limit(3)
+}
+
+export const getSingleProduct = (req, res) => {
+  Product.findOne({ _id: req.params.id }, (err, existingProduct) => {
+    if (err) {
+      return res.status(422).json(err)
+    }
+    if (existingProduct) {
+      return res.json({existingProduct})
+    }
+  })
 }
 
 export const addProduct = (req, res) => {

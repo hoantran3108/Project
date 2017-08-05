@@ -1,25 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { compose, withHandlers } from 'recompose'
 import { Form } from 'semantic-ui-react'
 import TextField from '../common/TextField'
 import FormButton from '../common/FormButton'
 
-class Shipping extends Component {
+const Shipping = ({ onSubmit }) => (
+  <Form onSubmit={onSubmit} >
+    <FormButton value="Continue" />
+  </Form>
+)
 
-  onSubmit = (e) => {
-    e.preventDefault()
-    const { setActiveItem, toggleProcess } = this.props
-    setActiveItem('billing')
-    toggleProcess('shipping')
-  }
+const enhance = compose(
+  withHandlers({
+    onSubmit: ({ setActiveItem, toggleProcess }) => event => {
+      event.preventDefault()
+      setActiveItem('billing'),
+      toggleProcess('shipping')
+    }
+  })
+)
 
-  render() {
-    return (
-      <Form onSubmit={this.onSubmit} >
-
-        <FormButton value="Continue" />
-      </Form>
-    )
-  }
-}
-
-export default Shipping
+export default enhance(Shipping)

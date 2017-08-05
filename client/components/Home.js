@@ -1,19 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import ProductList from './product/ProductsList'
 import { Container } from 'semantic-ui-react'
 import { productsSelector } from '../selectors/SelectedProducts'
 
-class Home extends Component {
-
-  render() {
-    return (
-    <Container>
-        <ProductList {...this.props}/>
-    </Container>
-    )
-  }
-}
+const Home = (props) => (
+  <Container>
+      <ProductList {...props}/>
+  </Container>
+)
 
 const mapStatetoProps = (state) => ({
   products: productsSelector(state)

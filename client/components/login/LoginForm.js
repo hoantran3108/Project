@@ -63,7 +63,7 @@ class LoginForm extends Component {
         removeAllMessages()
         addFlashMessage({
           type: 'error',
-          text: errors.response.data.form
+          text: (errors.response.data.form || errors)
         })
         this.setState({ errors, isLoading: false})
       })

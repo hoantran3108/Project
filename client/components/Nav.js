@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import SearchBar from './navbar/SearchBar'
-import { searchProducts } from '../actions/productAction'
 
 class Nav extends Component {
   constructor(props) {
@@ -92,4 +90,4 @@ class Nav extends Component {
   }
 }
 
-export default connect(null, { searchProducts })(Nav)
+export default Nav

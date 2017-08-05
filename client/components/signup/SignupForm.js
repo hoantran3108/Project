@@ -58,7 +58,7 @@ class SignupForm extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     if (this.isValid()) {
-      const { userSignup, addFlashMessage } = this.props
+      const { userSignup, addFlashMessage, history } = this.props
       this.setState({errors: {}, isLoading: true })
       userSignup(this.state)
       .then(() => {
@@ -66,7 +66,8 @@ class SignupForm extends Component {
           type: 'success',
           text: 'Signed up successfully'
         })
-        this.context.router.history.push('/')})
+        history.push('/')
+      })
       .catch(errors => {
         addFlashMessage({
           type: 'error',
@@ -172,9 +173,5 @@ class SignupForm extends Component {
       )
   }
 }
-
-SignupForm.contextTypes = {
-  router: PropTypes.object.isRequired
-  }
 
 export default SignupForm
