@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Redirect } from 'react-router-dom'
-import { SelectedProducts, quantityByIdsSelector, CartTotal } from '../../selectors/SelectedProducts'
 import BagProduct from './BagProduct'
-import { removeProduct, updateCart } from '../../actions/cartAction'
-import { removeAllMessages } from '../../actions/flashMessages'
-import { Container, Table, Button, Icon, Message, Header, Modal } from 'semantic-ui-react'
+import EmptyBag from './EmptyBag'
+import { Container, Table, Button, Icon, Header, Modal } from 'semantic-ui-react'
 
 class BagList extends Component {
   constructor(props) {
@@ -70,7 +65,7 @@ class BagList extends Component {
         <Table.Row>
           <Table.HeaderCell>
             <Modal trigger={<Button>Remove All</Button>} size='small'>
-            <Header content='Archive Old Messages' />
+            <Header content='Are you sure you want to remove all products from cart?' />
             <Modal.Actions>
               <Button color='red' inverted>
                 <Icon name='remove' /> No
@@ -102,31 +97,14 @@ class BagList extends Component {
     </Table.Footer>
   </Table>
 
-  const emptyCart =
-  <Message negative size='massive'>
-    <Message.Header>Oops! There are no products in your bag. Please add some
-      <Button animated='fade' floated='right' onClick={this.redirectToShop}>
-        <Button.Content visible>
-          <Icon name='shop' />
-        </Button.Content>
-        <Button.Content hidden>
-          Shop
-        </Button.Content>
-      </Button>
-    </Message.Header>
-  </Message>
   return (
     <Container>
-      {_.isEmpty(this.props.products) ? emptyCart : checkoutCart}
-    </Container>
-  )
-}
+      {_.isEmpty(this.props.products)
+        ? <EmptyBag redirectToShop={this.redirectToShop} {...this.props}/>
+        : checkoutCart}
+      </Container>
+    )
+  }
 }
 
-const mapStatetoProps = (state) => ({
-  products: SelectedProducts(state),
-  quantityByIds: quantityByIdsSelector(state),
-  total: CartTotal(state)
-})
-
-export default connect(mapStatetoProps, { removeProduct, updateCart, removeAllMessages })(BagList)
+export default BagList

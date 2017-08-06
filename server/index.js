@@ -9,7 +9,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from '../webpack.config.dev'
 import routes from './routes'
 
-mongoose.connect('mongodb://127.0.0.1/mongodb', function(err, db) {
+mongoose.connect('mongodb://127.0.0.1/mongodb', (err, db) => {
   if (err) {
     console.log(err)
   } else {

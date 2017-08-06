@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 import { Link } from 'react-router-dom'
 import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import SearchBar from './navbar/SearchBar'
+import UserNav from './navbar/UserNav'
+import GuestNav from './navbar/GuestNav'
 
 class Nav extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Nav extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    this.setState({ activeItem: nextProps.location.pathname })
+    this.setState({ activeItem: nextProps.location.pathname})
   }
 
   onClick = (e, { name }) => {
@@ -19,72 +20,20 @@ class Nav extends Component {
   }
 
   render() {
-    const { activeItem, isLoading, value } = this.state
-    const { searchProducts, logout, isAuthenticated } = this.props
-    const cart =
-    <Menu.Item
-      as={Link}
-      to='/shoppingbag'
-      name='/shoppingbag'
-      active={activeItem==='/shoppingbag'}
-      onClick={this.onClick}>
-      <Icon name='shopping bag' />
-    </Menu.Item>
-    const search =
-    <Menu.Item>
-      <SearchBar searchProducts={searchProducts} {...this.props}/>
-    </Menu.Item>
+    const { activeItem } = this.state
+    const { isAuthenticated } = this.props
 
-    const user =
-    <Menu.Menu position='right'>
-      {search}
-      {cart}
-      <Dropdown item text='Account'>
-        <Dropdown.Menu>
-          <Dropdown.Item>English</Dropdown.Item>
-          <Dropdown.Item>Russian</Dropdown.Item>
-          <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </Menu.Menu>
-
-    const guest = (
-      <Menu.Menu position='right'>
-        {search}
-        {cart}
-        <Menu.Item
-          as={Link}
-          to='/signup'
-          name='/signup'
-          active={activeItem==='/signup'}
-          onClick={this.onClick}>
-          Sign up
-        </Menu.Item>
-        <Menu.Item
-          as={Link}
-          to={{
-            pathname: '/login',
-            state: { modal: true }
-          }}
-          name='/login'
-          active={activeItem==='/login'}
-          onClick={this.onClick}>
-          Log in
-        </Menu.Item>
-      </Menu.Menu>
-    )
-
-    return(
+    return (
       <Menu secondary>
-        <Menu.Item
-          as={Link}
-          to='/'
-          name='/'
-          active={activeItem==='/'}
-          onClick={this.onClick}>
-          Home
-        </Menu.Item>
-        {isAuthenticated ? user : guest}
+        <Menu.Item as={Link} to='/' name='/' active={activeItem==='/'} onClick={this.onClick}>Home</Menu.Item>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <SearchBar {...this.props}/>
+          </Menu.Item>
+          <Menu.Item as={Link} to='/shoppingbag' name='/shoppingbag' active={activeItem==='/shoppingbag'} onClick={this.onClick}><Icon name='shopping bag' /></Menu.Item>
+        </Menu.Menu>
+        {isAuthenticated ? <UserNav {...this.props} {...this.state} />
+        : <GuestNav setActiveItem={this.onClick} {...this.props} {...this.state} />}
       </Menu>
     )
   }
