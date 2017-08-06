@@ -1,4 +1,5 @@
 import React from 'react'
+import { compose, withHandlers, flattenProp, pure } from 'recompose'
 import { Message } from 'semantic-ui-react'
 
 const FlashMessage = ({ id, type, text, deleteFlashMessage }) => (
@@ -10,4 +11,12 @@ const FlashMessage = ({ id, type, text, deleteFlashMessage }) => (
   />
 )
 
-export default FlashMessage
+const enhance = compose(
+  pure,
+  flattenProp('message'),
+  withHandlers({
+    deleteFlashMessage: ({ deleteFlashMessage, id }) => e => deleteFlashMessage(id)
+  })
+)
+
+export default enhance(FlashMessage)

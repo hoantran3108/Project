@@ -73,24 +73,14 @@ class SignupForm extends Component {
           type: 'error',
           text: 'Sign up failed'
         })
-      this.setState({ errors, isLoading: false })
-    })
+        this.setState({ errors, isLoading: false })
+      })
     }
   }
 
   render() {
-    const {
-      firstname,
-      lastname,
-      username,
-      email,
-      telephone,
-      address,
-      password,
-      passwordconfirmation,
-      errors,
-      isLoading
-    } = this.state
+    const {firstname, lastname, username, email, telephone, address, password, passwordconfirmation, errors, isLoading } = this.state
+
     return (
       <Form onSubmit={this.onSubmit} loading={isLoading}>
         <Form.Group widths='equal'>
@@ -112,65 +102,65 @@ class SignupForm extends Component {
           />
         </Form.Group>
         <Form.Group widths='equal'>
-        <TextField
-          error={errors.username}
-          label="Username*"
-          field="username"
-          value={username}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-        <TextField
-          error={errors.email}
-          label="Email*"
-          field="email"
-          value={email}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-      </Form.Group>
-      <Form.Group widths='equal'>
-         <TextField
-          error={errors.password}
-          label="Password*"
-          field="password"
-          value={password}
-          type="password"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-        <TextField
-          error={errors.passwordconfirmation}
-          label="Password Confirmation*"
-          field="passwordconfirmation"
-          value={passwordconfirmation}
-          type="password"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-      </Form.Group>
+          <TextField
+            error={errors.username}
+            label="Username*"
+            field="username"
+            value={username}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+          <TextField
+            error={errors.email}
+            label="Email*"
+            field="email"
+            value={email}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+        </Form.Group>
         <Form.Group widths='equal'>
-         <TextField
-          error={errors.telephone}
-          label="Telephone"
-          field="telephone"
-          value={telephone}
-          type="number"
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-         <TextField
-          error={errors.address}
-          label="Address"
-          field="address"
-          value={address}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-      </Form.Group>
+          <TextField
+            error={errors.password}
+            label="Password*"
+            field="password"
+            value={password}
+            type="password"
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+          <TextField
+            error={errors.passwordconfirmation}
+            label="Password Confirmation*"
+            field="passwordconfirmation"
+            value={passwordconfirmation}
+            type="password"
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+        </Form.Group>
+        <Form.Group widths='equal'>
+          <TextField
+            error={errors.telephone}
+            label="Telephone"
+            field="telephone"
+            value={telephone}
+            type="number"
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+          <TextField
+            error={errors.address}
+            label="Address"
+            field="address"
+            value={address}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+        </Form.Group>
         <FormButton value="Sign up" disabled={isLoading} />
       </Form>
-      )
+    )
   }
 }
 

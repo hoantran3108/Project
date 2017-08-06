@@ -1,23 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { compose, pure, withHandlers, flattenProp } from 'recompose'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
-class Product extends Component {
+const Product = ({ name, addToCart }) => (
+  <Card>
+    <Card.Header>{name}</Card.Header>
+    <Card.Content extra>
+      <Button color='green' onClick={addToCart}><Icon name='shop' />Add to cart</Button>
+    </Card.Content>
+  </Card>
+)
 
+const enhance = compose(
+  pure,
+  flattenProp('product'),
+  withHandlers({
+    addToCart: ({ addProductToCart, addFlashMessage, removeAllMessages, _id }) => e => {
+      addProductToCart(_id)
+      removeAllMessages()
+      addFlashMessage({
+        type: 'success',
+        text: 'Product added to cart'
+      })
+    }
+  })
+)
 
-  addtoCart = () => {
-    this.props.addtoCart(this.props.product._id)
-  }
-
-  render() {
-    const { _id, name, description, price, quantity } = this.props.product
-    const extra = <Button color='green' onClick={this.addtoCart}><Icon name='shop' />Add to cart</Button>
-    return (
-      <Card
-      header={name}
-      extra={extra}
-    />
-    )
-  }
-}
-
-export default Product
+export default enhance(Product)

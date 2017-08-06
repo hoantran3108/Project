@@ -1,49 +1,43 @@
 import React, { Component } from 'react'
+import { withState, withHandlers, compose, flattenProp } from 'recompose'
 import { Table, Image, Button, Input } from 'semantic-ui-react'
 
-class BagProduct extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      quantity: props.quantityById
-    }
-  }
+const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct }) => (
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>
+        <Button icon='remove' onClick={removeProduct} />
+      </Table.Cell>
+      <Table.Cell singleLine>
+      </Table.Cell>
+      <Table.Cell>
+        {name}
+      </Table.Cell>
+      <Table.Cell>
+        {price}
+      </Table.Cell>
+      <Table.Cell>
+        <Input size='mini' type='number' name='quantity' value={quantity} onChange={changeQuantity} />
+      </Table.Cell>
+      <Table.Cell>
+        {quantity * price}
+      </Table.Cell>
+    </Table.Row>
+  </Table.Body>
+)
 
-  changeQuantity = (e) => {
-    if (e.target.value >= 0 && e.target.value<=100) {
-      this.setState({[e.target.name]: e.target.value})
-      this.props.updateCart(this.props.product._id, e.target.value)
-    }
-  }
+const enhance = compose(
+  withState('quantity', 'setQuantity', props => props.quantityById),
+  flattenProp('product'),
+  withHandlers({
+    changeQuantity: ({ _id, updateCart, setQuantity, setTotal, total }) => e => {
+      if (e.target.value >= 0 && e.target.value<=100) {
+        setQuantity(e.target.value)
+        updateCart(_id, e.target.value)
+      }
+    },
+    removeProduct: ({ _id, removeProduct }) => e => removeProduct(_id)
+  })
+)
 
-  render() {
-    const { _id, name, category, price, image } = this.props.product
-    const { quantity } = this.state
-    return (
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>
-            <Button icon='remove' onClick={this.props.removeProduct} />
-          </Table.Cell>
-          <Table.Cell singleLine>
-
-          </Table.Cell>
-          <Table.Cell>
-            {name}
-          </Table.Cell>
-          <Table.Cell>
-            {price}
-          </Table.Cell>
-          <Table.Cell>
-            <Input size='mini' type='number' name='quantity' value={quantity} onChange={this.changeQuantity} />
-          </Table.Cell>
-          <Table.Cell>
-            {quantity * price}
-          </Table.Cell>
-        </Table.Row>
-      </Table.Body>
-    )
-  }
-}
-
-export default BagProduct
+export default enhance(BagProduct)

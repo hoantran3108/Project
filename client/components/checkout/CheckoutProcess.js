@@ -6,11 +6,11 @@ import Shipping from './Shipping'
 import Billing from './Billing'
 import Payment from './Payment'
 
-const CheckoutProcess = (props) => (
+const CheckoutProcess = ({ activeItem, ...rest}) => (
   <Container>
-    {props.activeItem==='shipping' ? <Shipping {...props} /> : null}
-    {props.activeItem==='billing' ? <Billing {...props} /> : null}
-    {props.activeItem==='payment' ? <Payment {...props} /> : null}
+    {activeItem==='shipping' ? <Shipping {...rest} /> : null}
+    {activeItem==='billing' ? <Billing {...rest} /> : null}
+    {activeItem==='payment' ? <Payment {...rest} /> : null}
   </Container>
 )
 

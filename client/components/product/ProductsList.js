@@ -1,59 +1,42 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
+import { compose, withState, withHandlers, branch, renderComponent  } from 'recompose'
 import Product from './Product'
-import { fetchProducts } from '../../actions/productAction'
-import { addProductToCart } from '../../actions/cartAction'
-import { addFlashMessage, removeAllMessages } from '../../actions/flashMessages'
-import { Card, Button, Loader, Dimmer } from 'semantic-ui-react'
+import Spinner from '../common/Spinner'
+import { Card, Button, Container } from 'semantic-ui-react'
 
-class ProductsList extends Component {
-  constructor() {
-    super()
-    this.state = {
-      isLoading: false,
-      isActivated: true
+const ProductList = ({ products, isActivated, onLoad, ...rest }) => (
+  <Container>
+    <Card.Group>
+      {products.map(product => <Product key={product._id} {...product} {...rest} />)}
+    </Card.Group>
+    {isActivated ? <Button onClick={onLoad}>Load more</Button> : null}
+  </Container>
+)
+
+const isLoading = ({ isLoading }) => isLoading
+
+const withSpinnerWhileLoading = branch(
+  isLoading,
+  renderComponent(Spinner)
+)
+
+const enhance = compose(
+  withState('isLoading', 'toggleLoading', false),
+  withState('isActivated', 'toggleActive', true),
+  withHandlers({
+    onLoad: ({ fetchProducts, products, toggleLoading, toggleActive }) => e => {
+      toggleLoading(true)
+      fetchProducts(products.length)
+      .then(res => {
+        toggleLoading(false)
+        if (res.data.products.length<3) {
+          toggleActive(false)
+        }
+      })
+      .catch(errors => { throw new Error(errors) })
     }
-  }
+  }),
+  withSpinnerWhileLoading
+)
 
-  addtoCart = (id) => {
-    const { addProductToCart, addFlashMessage, removeAllMessages } = this.props
-    addProductToCart(id)
-    removeAllMessages()
-    addFlashMessage({
-      type: 'success',
-      text: 'Product added to cart'
-    })
-  }
-
-  loadMore = () => {
-    const { fetchProducts } = this.props
-    this.setState({ isLoading: true})
-    fetchProducts(this.props.products.length)
-    .then(res => {
-      this.setState({ isLoading: false})
-      if (res.data.products.length < 3) {
-        this.setState({ isActivated: false })
-      }
-    })
-    .catch(err => {
-      throw new Error(err)
-    })
-  }
-
-  render() {
-    const { isLoading, isActivated } = this.state
-    const { products } = this.props
-    const items = products.map(product => <Product key={product._id} product={product} addtoCart={this.addtoCart} />)
-    return (
-      <Card.Group>
-        {items}
-        {isActivated ? <Button onClick={this.loadMore}>Load more</Button> : null}
-        <Dimmer active={isLoading} inverted>
-          <Loader inverted />
-        </Dimmer>
-      </Card.Group>
-    )
-  }
-}
-
-export default connect(null, { fetchProducts, addProductToCart, addFlashMessage, removeAllMessages })(ProductsList)
+export default enhance(ProductList)
