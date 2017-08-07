@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import BagProduct from './BagProduct'
+<<<<<<< HEAD
 import { compose, withState, withHandlers, flattenProp, branch, renderComponent, shouldUpdate } from 'recompose'
+=======
+>>>>>>> 00424e5c7680c5cd530e60c23c90a5967fc24b3d
 import EmptyBag from './EmptyBag'
 import { Container, Table, Button, Icon, Header, Modal } from 'semantic-ui-react'
 
@@ -63,6 +66,7 @@ const BagList = ({ products, quantityByIds, removeProducts, checkout, redirectTo
 
 const isEmpty = ({ products }) => products.length===0
 
+<<<<<<< HEAD
 const EmptyBagWithNoProduct = branch(
   isEmpty,
   renderComponent(EmptyBag)
@@ -85,3 +89,16 @@ const enhance = compose(
 )
 
 export default enhance(BagList)
+=======
+  return (
+    <Container>
+      {_.isEmpty(this.props.products)
+        ? <EmptyBag redirectToShop={this.redirectToShop} {...this.props}/>
+        : checkoutCart}
+      </Container>
+    )
+  }
+}
+
+export default BagList
+>>>>>>> 00424e5c7680c5cd530e60c23c90a5967fc24b3d

@@ -23,7 +23,14 @@ const mapStatetoProps = (state) => ({
 
 const enhance = compose(
   withRouter,
+<<<<<<< HEAD
   connect(mapStatetoProps, { removeProducts, removeProduct, updateCart, removeAllMessages })
+=======
+  connect(mapStatetoProps, { removeProducts, removeProduct, updateCart, removeAllMessages }),
+  withHandlers({
+    removeProducts: ({ removeProducts }) => event => removeProducts()
+  })
+>>>>>>> 00424e5c7680c5cd530e60c23c90a5967fc24b3d
 )
 
 export default enhance(BagPage)
