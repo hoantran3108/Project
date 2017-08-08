@@ -8,9 +8,9 @@ import Payment from './Payment'
 
 const CheckoutProcess = ({ activeItem, ...rest}) => (
   <Container>
-    {activeItem==='shipping' ? <Shipping {...rest} /> : null}
-    {activeItem==='billing' ? <Billing {...rest} /> : null}
-    {activeItem==='payment' ? <Payment {...rest} /> : null}
+    {activeItem==='shipping' && <Shipping {...rest} />}
+    {activeItem==='billing' && <Billing {...rest} />}
+    {activeItem==='payment' && <Payment {...rest} />}
   </Container>
 )
 

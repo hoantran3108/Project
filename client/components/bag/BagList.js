@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import BagProduct from './BagProduct'
-import { compose, withState, withHandlers, flattenProp, branch, renderComponent, shouldUpdate } from 'recompose'
+import { compose, withState, withHandlers, flattenProp, branch, renderComponent, shouldUpdate, withProps } from 'recompose'
 import EmptyBag from './EmptyBag'
 import { Container, Table, Button, Icon, Header, Modal } from 'semantic-ui-react'
 
-const BagList = ({ products, quantityByIds, removeProducts, checkout, redirectToShop, total, ...rest}) => (
+const BagList = ({ productList, quantityByIds, removeProducts, checkout, redirectToShop, total, ...rest}) => (
   <Table celled padded>
     <Table.Header>
       <Table.Row>
@@ -17,13 +17,7 @@ const BagList = ({ products, quantityByIds, removeProducts, checkout, redirectTo
         <Table.HeaderCell>Subtotal</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
-    {products.map(product =>
-      <BagProduct
-        key={product._id}
-        quantityById={quantityByIds[product._id]}
-        {...rest}
-        {...product}
-      />)}
+      {productList}
       <Table.Footer fullWidth>
         <Table.Row>
           <Table.HeaderCell>
@@ -73,6 +67,15 @@ const enhance = compose(
     if (prevProps.total !== nextProps.total) return true
     return false
   }),
+  withProps(props => ({
+    productList: props.products.map(product =>
+      <BagProduct
+        key={product._id}
+        quantityById={props.quantityByIds[product._id]}
+        {...props}
+        {...product}
+      />)
+  })),
   withHandlers({
     redirectToShop: ({ history }) => e => history.push('/'),
     checkout: ({ removeAllMessages, history }) => e => {

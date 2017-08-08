@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
    name: {
     type: String,
+    unique: true,
     require: true,
   },
   category: {
@@ -13,8 +14,7 @@ const productSchema = new Schema({
   },
   description: String,
   price: Number,
-  inventory: Number,
-  image: String
+  inventory: Number
 })
 
 export default mongoose.model('Product', productSchema)

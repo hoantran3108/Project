@@ -6,15 +6,19 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
   firstname: {
     type: String,
+    max: 30,
     require: true
   },
   lastname: {
     type: String,
-    require: true,
+    max: 30,
+    require: true
   },
   username: {
     type: String,
     lowercase: true,
+    min: 6,
+    max: 30,
     require: true,
     unique: true
   },
@@ -24,22 +28,31 @@ const userSchema = new Schema({
     require: true,
     unique: true
   },
-  telephone: Number,
-  address: String,
+  telephone: {
+    type: Number,
+    min: 9,
+    max: 12
+  },
+  address: {
+    type: String,
+    max: 200
+  },
   password: {
     type: String,
+    min: 6,
+    max: 100,
     require: true
   }
-})
+}, { timestamps: { createdAt: 'created_at' }})
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', (next) => {
   const user = this
 
-  bcrypt.genSalt(10, function(err, salt) {
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       return next(err)
     }
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(user.password, salt, (err, hash) => {
       if (err) {
         return next(err)
       }
@@ -49,8 +62,8 @@ userSchema.pre('save', function(next) {
   })
 })
 
-userSchema.methods.comparePassword = function(canidatePassword, next) {
-  bcrypt.compare(canidatePassword, this.password, function(err, isMatch) {
+userSchema.methods.comparePassword = (canidatePassword, next) => {
+  bcrypt.compare(canidatePassword, this.password, (err, isMatch) => {
     if (err) {
       return next(err)
     }

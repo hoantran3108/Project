@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withState, withHandlers, compose, flattenProp } from 'recompose'
-import { Table, Image, Button, Input } from 'semantic-ui-react'
+import { Table, Image, Button, Input, Label } from 'semantic-ui-react'
 
-const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct }) => (
+const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct, errors }) => (
   <Table.Body>
     <Table.Row>
       <Table.Cell>
@@ -18,6 +18,7 @@ const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct }) =>
       </Table.Cell>
       <Table.Cell>
         <Input size='mini' type='number' name='quantity' value={quantity} onChange={changeQuantity} />
+        {errors}
       </Table.Cell>
       <Table.Cell>
         {quantity * price}
@@ -28,12 +29,14 @@ const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct }) =>
 
 const enhance = compose(
   withState('quantity', 'setQuantity', props => props.quantityById),
+  withState('errors', 'setErrors', null),
   flattenProp('product'),
   withHandlers({
-    changeQuantity: ({ _id, updateCart, setQuantity, setTotal, total }) => e => {
+    changeQuantity: ({ _id, updateCart, setQuantity, setTotal, total, setErrors }) => e => {
       if (e.target.value >= 0 && e.target.value<=100) {
         setQuantity(e.target.value)
         updateCart(_id, e.target.value)
+        .catch(errors => console.log(errors))
       }
     },
     removeProduct: ({ _id, removeProduct }) => e => removeProduct(_id)

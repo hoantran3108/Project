@@ -35,7 +35,7 @@ export default {
       },
       {
         test:/\.css$/,
-        include: path.join(__dirname,'client/public'),
+        include: path.join(__dirname,'dist/css'),
         use: [
           'style-loader',
           'css-loader'
@@ -44,6 +44,6 @@ export default {
     ]
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.css']
   }
 }

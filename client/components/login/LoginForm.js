@@ -1,100 +1,42 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import TextField from '../common/TextField'
-import FormButton from '../common/FormButton'
-import validateInput from '../../../server/shared/validations/login'
-import { Form } from 'semantic-ui-react'
+import renderField from '../common/renderField'
+import { compose, withHandlers } from 'recompose'
+import validate from '../../utils/validations/validateLogin'
+import { Form, Button } from 'semantic-ui-react'
+import { Field, reduxForm } from 'redux-form/immutable'
 
+const LoginForm = ({ handleSubmit, onLogin, pristine, reset, submitting }) => (
+  <Form onSubmit={handleSubmit(onLogin)} loading={submitting}>
+    <Field name='username' component={renderField} label='Username' />
+    <Field name='password' type='password' component={renderField} label='Password' />
+    <Button primary disabled={pristine || submitting}>Log in</Button>
+    <Button disabled={pristine || submitting} onClick={reset}>Clear Fields</Button>
+  </Form>
+)
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      errors: {},
-      isLoading: false
-    }
-  }
-
-  onBlur = (e) => {
-    let field = e.target.name
-    let errors = this.state.errors
-    if (e.target.value === '') {
-      errors[field] = 'Required'
-      this.setState({ errors })
-    }
-  }
-
-  onChange = (e) => {
-    if(!!this.state.errors[e.target.name]) {
-      let field = e.target.name
-      let errors = this.state.errors
-      errors[field] = undefined
-      this.setState({ [e.target.name]: e.target.value, errors})
-    } else {
-      this.setState({ [e.target.name]: e.target.value })
-    }
-  }
-
-  isValid() {
-    const { errors, isValid } = validateInput(this.state)
-
-    if (!isValid) {
-      this.setState({ errors })
-    }
-    return isValid
-  }
-
-  onSubmit = (e) => {
-    const { removeAllMessages, addFlashMessage, history, login } = this.props
-    e.preventDefault()
-    if (this.isValid()) {
-      this.setState({ isLoading: true})
-      login(this.state)
+const enhance = compose(
+  reduxForm({
+    form: 'loginForm',
+    validate
+  }),
+  withHandlers({
+    onLogin: ({ login, formValues, removeAllMessages, addFlashMessage }) => e => {
+      removeAllMessages()
+      login(formValues)
       .then(res => {
-        removeAllMessages()
         addFlashMessage({
           type: 'success',
           text: 'Loged in successfully'
         })
       })
       .catch(errors => {
-        removeAllMessages()
         addFlashMessage({
           type: 'error',
-          text: (errors.response.data.form || errors)
+          text: errors.response.data.form
         })
-        this.setState({ errors, isLoading: false})
       })
     }
-  }
+  })
+)
 
-  render() {
-    const { username, password, errors, isLoading } = this.state
-    return (
-      <Form onSubmit={this.onSubmit} loading={isLoading}>
-        <TextField
-          error={errors.username}
-          label="Username"
-          field="username"
-          value={username}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-        />
-        <TextField
-          error={errors.password}
-          label="Password"
-          field="password"
-          value={password}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-          type="password"
-        />
-        <FormButton value="Log in" disabled={isLoading} />
-      </Form>
-    )
-  }
-}
-
-export default LoginForm
+export default enhance(LoginForm)

@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { combineReducers } from 'redux-immutable'
+import { reducer as form } from 'redux-form/immutable'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import user from './reducers/user'
@@ -16,7 +17,8 @@ const configureStore = () => {
     products,
     cart,
     step,
-    flashMessages
+    flashMessages,
+    form
   })
 
   const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

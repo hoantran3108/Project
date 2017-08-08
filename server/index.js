@@ -17,7 +17,7 @@ mongoose.connect('mongodb://127.0.0.1/mongodb', (err, db) => {
   }
 })
 
-let app = express();
+const app = express();
 
 mongoose.Promise = Promise
 
