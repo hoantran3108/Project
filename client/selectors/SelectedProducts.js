@@ -17,7 +17,7 @@ const getProducts = (products, addedIds) => {
 const getTotal = (products, quantitybyIds) => {
   const total = products.reduce((total, product) =>
     total + product.price * quantitybyIds[product._id],
-    0)
+    0).toFixed(2)
   return total
 }
 

@@ -20,8 +20,8 @@ const SignupForm = ({ handleSubmit, userSignup, pristine, reset, submitting }) =
       <Field name='address' component={renderField} label='Address' />
     </Form.Group>
     <Form.Group widths='equal'>
-      <Field name='password' tyep='password' component={renderField} label='Password*' />
-      <Field name='passwordconfirmation' tyep='password' component={renderField} label='Password Confirmation*' />
+      <Field name='password' type='password' component={renderField} label='Password*' />
+      <Field name='passwordconfirmation' type='password' component={renderField} label='Password Confirmation*' />
     </Form.Group>
     <Form.Group>
       <Button primary disabled={pristine || submitting}>Sign up</Button>

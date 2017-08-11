@@ -6,29 +6,39 @@ export const signup = (req, res) => {
   const { errors, isValid } = validateInput(req.body)
   if (isValid) {
     const { firstname, lastname, username, email, telephone, address, password } = req.body
-
-    User.findOne({ $or: [{email: email.toLowerCase()}, {username: username.toLowerCase()}]},'username email', (err, existingUser) => {
+    const user = new User({ firstname, lastname, username, email, telephone, address, password })
+    user.save((err, savedUser) => {
       if (err) {
-        return res.status(422).json(err)
+        return res.status(500).json(err)
       }
-      if (existingUser) {
-        return res.status(422).send({form: 'Email is in use'})
+      if (savedUser) {
+        const token = generateToken(savedUser)
+        return res.json({token})
       }
-      const user = new User({ firstname, lastname, username, email, telephone, address, password })
-      user.save((err, savedUser) => {
-        if (err) {
-          console.log(err)
-          return res.status(500).json(err)
-        }
-        if (savedUser) {
-          const token = generateToken(savedUser)
-          return res.json({token})
-        }
-      })
     })
   } else {
     return res.status(400).json(errors)
   }
+}
+
+export const checkExistingUsername = (req, res, next) => {
+  const { username } = req.body
+  User.findOne({ username }, (err, existingUser) => {
+    if (err || existingUser) {
+      return next(null, ({ form: { username: 'That username is already taken' }}))
+    }
+    next()
+  })
+}
+
+export const checkExistingEmail = (req, res, next) => {
+  const { email } = req.body
+  User.findOne({ email }, (err, existingUser) => {
+    if (err || existingUser) {
+      return next(null, ({ form: { email: 'Email is already in use' }}))
+    }
+    next()
+  })
 }
 
 export const authentication = (req, res) => {

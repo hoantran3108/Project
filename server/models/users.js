@@ -45,14 +45,14 @@ const userSchema = new Schema({
   }
 }, { timestamps: { createdAt: 'created_at' }})
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
   const user = this
 
-  bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.genSalt(10, function(err, salt) {
     if (err) {
       return next(err)
     }
-    bcrypt.hash(user.password, salt, (err, hash) => {
+    bcrypt.hash(user.password, salt, function(err, hash) {
       if (err) {
         return next(err)
       }
@@ -62,8 +62,8 @@ userSchema.pre('save', (next) => {
   })
 })
 
-userSchema.methods.comparePassword = (canidatePassword, next) => {
-  bcrypt.compare(canidatePassword, this.password, (err, isMatch) => {
+userSchema.methods.comparePassword = function(canidatePassword, next) {
+  bcrypt.compare(canidatePassword, this.password, function(err, isMatch) {
     if (err) {
       return next(err)
     }

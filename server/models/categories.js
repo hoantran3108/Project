@@ -7,7 +7,8 @@ const categorySchema = new Schema({
     type: String,
     require: true,
     unique: true
-  }
-})
+  },
+  description: String
+}, { timestamps: { createdAt: 'created_at' }})
 
 export default mongoose.model('Category', categorySchema)

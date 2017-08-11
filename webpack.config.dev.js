@@ -7,7 +7,7 @@ export default {
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
     path.join(__dirname, '/client/index.js')
-    ],
+  ],
   output: {
     path: '/',
     publicPath: '/',
@@ -27,18 +27,17 @@ export default {
     rules: [
       {
         test:/\.js$/,
-        include: [
-          path.join(__dirname,'client'),
-          path.join(__dirname,'server/shared')
-        ],
+        include: path.join(__dirname,'client'),
         use: ['babel-loader']
       },
       {
         test:/\.css$/,
         include: path.join(__dirname,'dist/css'),
         use: [
-          'style-loader',
-          'css-loader'
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: {
+            modules: true }
+          }
         ]
       }
     ]

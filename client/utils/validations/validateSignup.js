@@ -33,11 +33,13 @@ const validate = (values) => {
   if (!getEmail(values)) {
     errors.email = 'Required'
   }
-  if (getEmail(values) && /\S+@\S+\.\S+/i.test(getEmail(values))) {
+  if (getEmail(values) && !/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/i.test(getEmail(values))) {
     errors.email = 'Invalid Email'
   }
   if (getTelephone(values) && isNaN(Number(getTelephone(values)))) {
     errors.telephone = 'Must be a number'
+  } else if (getTelephone(values) && !/\d{10,11}/.test(getTelephone(values))) {
+    errors.telephone = 'Must be 10 or 11 digits'
   }
   if (getAddress(values) && getAddress(values).length > 200) {
     errors.address = 'Must be less than 200 characters'
@@ -50,6 +52,12 @@ const validate = (values) => {
   }
   if (getPassword(values) && getPassword(values).length > 100) {
     errors.password = 'Contains at most 100 characters'
+  }
+  if (getPassword(values) && !/(?=.*[A-Z])/.test(getPassword(values))) {
+    errors.password = 'Contains at least 1 uppercase letter'
+  }
+  if (getPassword(values) && !/(?=.*[a-z])/.test(getPassword(values))) {
+    errors.password = 'Contains at least 1 lowercase letter'
   }
   if (!getPasswordConfirmation(values)) {
     errors.passwordconfirmation = 'Required'

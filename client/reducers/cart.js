@@ -36,8 +36,8 @@ const quantityById = (state = initialState.get('quantityById'), action) => {
     //   ...state,
     //   [action.productId]: (state[action.productId] || 0) + 1
     // }
-    return state.update(action.productId, (quantity=0) => quantity+1)
-    
+    return state.update(action.productId, (quantity=0) => parseInt(quantity)+1)
+
     case UPDATE_CART:
     // return {
     //   ...state,

@@ -1,10 +1,15 @@
 import React from 'react'
 import { compose, pure, withHandlers, flattenProp } from 'recompose'
+import { Link } from 'react-router-dom'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import styles from '../../../dist/css/style.css'
 
-const Product = ({ name, addToCart }) => (
+const Product = ({ _id, name, images, price, addToCart }) => (
   <Card>
-    <Card.Header>{name}</Card.Header>
+    <Image as={Link} to={`/product/${_id}`} label={{ color: 'green', content: `$${price}`, ribbon: true }} src={images[0]} />
+    <Card.Content>
+      <Card.Header>{name}</Card.Header>
+    </Card.Content>
     <Card.Content extra>
       <Button color='green' onClick={addToCart}><Icon name='shop' />Add to cart</Button>
     </Card.Content>

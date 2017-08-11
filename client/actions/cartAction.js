@@ -1,8 +1,7 @@
 import axios from 'axios'
-import _ from 'lodash'
 import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from './types'
 import { saveCart } from '../localStorage'
-import { productsSelector, cartSelector } from '../selectors/SelectedProducts'
+import { productsSelector, cartSelector, quantityByIdsSelector } from '../selectors/SelectedProducts'
 
 const addToCart = (productId) => ({
   type: ADD_TO_CART,
@@ -24,8 +23,9 @@ const removeProductFromCart = (productId) => ({
 })
 
 export const addProductToCart = (productId) => (dispatch, getState) => {
-  _.map(productsSelector(getState()), product => {
-    if (product._id === productId && product.inventory > 0) {
+  const idsByQuantity = quantityByIdsSelector(getState())
+  productsSelector(getState()).map(product => {
+    if (product._id === productId && product.inventory > 0 && (idsByQuantity[productId] || 0) < 100) {
       dispatch(addToCart(productId))
       saveCart({
         products: productsSelector(getState()),

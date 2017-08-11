@@ -6,6 +6,7 @@ import { removeProducts } from '../../actions/cartAction'
 import { removeProduct, updateCart } from '../../actions/cartAction'
 import { removeAllMessages } from '../../actions/flashMessages'
 import { SelectedProducts, quantityByIdsSelector, CartTotal } from '../../selectors/SelectedProducts'
+import { authenticateSelector } from '../../selectors/SelectedUser'
 import { Container } from 'semantic-ui-react'
 import BagList from './BagList'
 
@@ -18,7 +19,8 @@ const BagPage = (props) => (
 const mapStatetoProps = (state) => ({
   products: SelectedProducts(state),
   quantityByIds: quantityByIdsSelector(state),
-  total: CartTotal(state)
+  total: CartTotal(state),
+  isAuthenticated: authenticateSelector(state)
 })
 
 const enhance = compose(

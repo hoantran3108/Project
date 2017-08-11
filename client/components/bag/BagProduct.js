@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { withState, withHandlers, compose, flattenProp } from 'recompose'
 import { Table, Image, Button, Input, Label } from 'semantic-ui-react'
+import styles from '../../../dist/css/style'
 
-const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct, errors }) => (
+const BagProduct = ({ _id, name, price, quantity, images, changeQuantity, removeProduct, errors }) => (
   <Table.Body>
     <Table.Row>
       <Table.Cell>
         <Button icon='remove' onClick={removeProduct} />
       </Table.Cell>
       <Table.Cell singleLine>
+        <img className={styles.img} src={images[0]} />
       </Table.Cell>
       <Table.Cell>
-        {name}
+        <Link to={`/product/${_id}`}>{name}</Link>
       </Table.Cell>
       <Table.Cell>
         {price}
       </Table.Cell>
       <Table.Cell>
         <Input size='mini' type='number' name='quantity' value={quantity} onChange={changeQuantity} />
-        {errors}
+        {errors && <Label floating>{errors}</Label>}
       </Table.Cell>
       <Table.Cell>
-        {quantity * price}
+        ${(quantity * price).toFixed(2)}
       </Table.Cell>
     </Table.Row>
   </Table.Body>
@@ -29,14 +32,15 @@ const BagProduct = ({ name, price, quantity, changeQuantity, removeProduct, erro
 
 const enhance = compose(
   withState('quantity', 'setQuantity', props => props.quantityById),
-  withState('errors', 'setErrors', null),
+  withState('errors', 'setErrors', ''),
   flattenProp('product'),
   withHandlers({
     changeQuantity: ({ _id, updateCart, setQuantity, setTotal, total, setErrors }) => e => {
+      setErrors('')
       if (e.target.value >= 0 && e.target.value<=100) {
         setQuantity(e.target.value)
         updateCart(_id, e.target.value)
-        .catch(errors => console.log(errors))
+        .catch(errors => setErrors(errors))
       }
     },
     removeProduct: ({ _id, removeProduct }) => e => removeProduct(_id)

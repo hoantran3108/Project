@@ -1,12 +1,13 @@
 import Product from '../models/products'
 
-
 export const getProducts = (req, res) => {
   Product.find({ name: new RegExp(req.query.name, 'i')}, (err, products) => {
     if (err) {
       return res.status(500).json({ errors: err})
     }
-    res.json({products})
+    if (products) {
+      return res.json({products})
+    }
   }).skip(parseInt(req.query.total)).limit(3)
 }
 
@@ -32,37 +33,37 @@ export const checkExistingProduct = (req ,res, next) => {
 }
 
 export const addProduct = (req, res) => {
-  const { name, category, description, price, inventory } = req.body
-  const product = new Product({ name, category, description, price, inventory })
+  const { name, category, player, playtime, age, description, price, inventory, images } = req.body
+  const product = new Product({ name, category, player, playtime, age, description, price, inventory, images })
   product.save((err, savedProduct) => {
     if (err) {
       return res.status(500).json(err)
     }
     if (savedProduct) {
-      return res.json({savedProduct})
+      return res.json({ success: true })
     }
   })
 }
 
-export const editProduct = (req, res) => {
-  const { name, description, price, quantity } = req.body
-  Product.findOneAndUpdate({name: req.params.identifier},
-    { $set: { name, description, price, quantity }}, (err, product) => {
-      if (err || !product) {
-        return res.status(500).json({errors: err})
-      } else {
-        res.json(product)
+  export const editProduct = (req, res) => {
+    const { name, description, price, quantity } = req.body
+    Product.findOneAndUpdate({name: req.params.identifier},
+      { $set: { name, description, price, quantity }}, (err, product) => {
+        if (err || !product) {
+          return res.status(500).json({errors: err})
+        } else {
+          res.json(product)
+        }
       }
-    }
-  )
-}
+    )
+  }
 
-export const deleteProduct = (req, res) => {
-  const { name, description, price, quantity } = req.body
-  Product.findOneAndRemove({name: req.params.identifier}, (err) => {
-    if(err) {
-      return res.status(500).json({errors: err})
-    }
-    res.json({success: true})
-  })
-}
+  export const deleteProduct = (req, res) => {
+    const { name, description, price, quantity } = req.body
+    Product.findOneAndRemove({name: req.params.identifier}, (err) => {
+      if(err) {
+        return res.status(500).json({errors: err})
+      }
+      res.json({success: true})
+    })
+  }
