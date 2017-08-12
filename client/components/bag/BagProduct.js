@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withState, withHandlers, compose, flattenProp } from 'recompose'
-import { Table, Image, Button, Input, Label } from 'semantic-ui-react'
+import { Table, Image, Button, Input, Label, Icon } from 'semantic-ui-react'
 import styles from '../../../dist/css/style'
 
 const BagProduct = ({ _id, name, price, quantity, images, changeQuantity, removeProduct, errors }) => (
@@ -10,7 +10,7 @@ const BagProduct = ({ _id, name, price, quantity, images, changeQuantity, remove
       <Table.Cell>
         <Button icon='remove' onClick={removeProduct} />
       </Table.Cell>
-      <Table.Cell singleLine>
+      <Table.Cell>
         <img className={styles.img} src={images[0]} />
       </Table.Cell>
       <Table.Cell>
@@ -19,9 +19,9 @@ const BagProduct = ({ _id, name, price, quantity, images, changeQuantity, remove
       <Table.Cell>
         {price}
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell singleLine>
         <Input size='mini' type='number' name='quantity' value={quantity} onChange={changeQuantity} />
-        {errors && <Label floating>{errors}</Label>}
+        {errors && <Icon name='warning circle' color='red' />}
       </Table.Cell>
       <Table.Cell>
         ${(quantity * price).toFixed(2)}

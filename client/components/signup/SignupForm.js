@@ -36,22 +36,7 @@ const enhance = compose(
     validate
   }),
   withHandlers({
-    onSignup: ({ userSignup, removeAllMessages, addFlashMessage, formValues }) => e => {
-      removeAllMessages()
-      userSignup(formValues)
-      .then(() => {
-        addFlashMessage({
-          type: 'success',
-          text: 'Signed up successfully'
-        })
-      })
-      .catch(errors => {
-        addFlashMessage({
-          type: 'error',
-          text: (errors.response.data.form || errors)
-        })
-      })
-    }
+    onSignup: ({ userSignup, formValues }) => e => userSignup(formValues)
   })
 )
 

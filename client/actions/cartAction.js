@@ -2,6 +2,7 @@ import axios from 'axios'
 import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from './types'
 import { saveCart } from '../localStorage'
 import { productsSelector, cartSelector, quantityByIdsSelector } from '../selectors/SelectedProducts'
+import { addFlashMessage, removeAllMessages } from './flashMessages'
 
 const addToCart = (productId) => ({
   type: ADD_TO_CART,
@@ -27,6 +28,11 @@ export const addProductToCart = (productId) => (dispatch, getState) => {
   productsSelector(getState()).map(product => {
     if (product._id === productId && product.inventory > 0 && (idsByQuantity[productId] || 0) < 100) {
       dispatch(addToCart(productId))
+      dispatch(removeAllMessages())
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: 'Product added to cart'
+      }))
       saveCart({
         products: productsSelector(getState()),
         cart: cartSelector(getState())

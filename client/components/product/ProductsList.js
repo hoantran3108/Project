@@ -6,10 +6,10 @@ import { Card, Button, Container } from 'semantic-ui-react'
 
 const ProductList = ({ products, isActivated, onLoad, ...rest }) => (
   <Container>
-    <Card.Group>
+    <Card.Group itemsPerRow='four'>
       {products.map(product => <Product key={product._id} {...product} {...rest} />)}
     </Card.Group>
-    {isActivated ? <Button onClick={onLoad}>Load more</Button> : null}
+    {isActivated && <Button onClick={onLoad}>Load more</Button>}
   </Container>
 )
 

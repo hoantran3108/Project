@@ -17,7 +17,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.4",
-    "file-loader": "^0.11.2",
     "morgan": "^1.8.2",
     "nodemon": "^1.11.0",
     "react-hot-loader": "^3.0.0-beta.2",

@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import LoginForm from './LoginForm'
 import { getLoginValues } from '../../selectors/SelectedForms'
 import { login } from '../../actions/loginAction'
-import { addFlashMessage, removeAllMessages } from '../../actions/flashMessages'
 
 const LoginPage = (props) => <LoginForm {...props} />
 
@@ -15,7 +14,7 @@ const mapStatetoProps = (state) => ({
 
 const enhance = compose(
   withRouter,
-  connect(mapStatetoProps, { login, addFlashMessage, removeAllMessages })
+  connect(mapStatetoProps, { login })
 )
 
 export default enhance(LoginPage)

@@ -20,22 +20,7 @@ const enhance = compose(
     validate
   }),
   withHandlers({
-    onLogin: ({ login, formValues, removeAllMessages, addFlashMessage }) => e => {
-      removeAllMessages()
-      login(formValues)
-      .then(res => {
-        addFlashMessage({
-          type: 'success',
-          text: 'Loged in successfully'
-        })
-      })
-      .catch(errors => {
-        addFlashMessage({
-          type: 'error',
-          text: errors.response.data.form
-        })
-      })
-    }
+    onLogin: ({ login, formValues }) => e => login(formValues)
   })
 )
 

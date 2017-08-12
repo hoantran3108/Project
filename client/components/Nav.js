@@ -36,7 +36,7 @@ const enhance = compose(
     }
   }),
   withHandlers({
-    onNavigate: ({ setActiveItem }) => (e, { name }) => { setActiveItem(name) }
+    onNavigate: ({ setActiveItem }) => (e, { name }) => setActiveItem(name)
   })
 )
 

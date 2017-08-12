@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { compose, withState, withStateHandlers, withHandlers, flattenProp, branch, renderComponent, shouldUpdate, withProps } from 'recompose'
-import Transition from 'react-transition-group/Transition'
+import { compose, withStateHandlers, withHandlers, branch, renderComponent, shouldUpdate, withProps } from 'recompose'
 import BagProduct from './BagProduct'
 import EmptyBag from './EmptyBag'
 import LoginPage from '../login/LoginPage'
@@ -8,8 +7,8 @@ import { Container, Table, Button, Icon, Header, Modal } from 'semantic-ui-react
 
 const BagList = ({ productList, quantityByIds, removeProducts, checkout, redirectToShop, total,
   openModalRemove, closeModalRemove, isModalRemoveOpen, isAuthenticated,
-  openModalLogin, closeModalLogin, isModalLoginOpen,  ...rest}) => (
-    <Table celled padded>
+  openModalLogin, closeModalLogin, isModalLoginOpen,  ...rest }) => (
+    <Table celled padded fixed>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Remove</Table.HeaderCell>

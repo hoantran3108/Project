@@ -12,7 +12,7 @@ export const getProducts = (req, res) => {
 }
 
 export const getSingleProduct = (req, res) => {
-  Product.findOne({ _id: req.params.id }, (err, existingProduct) => {
+  Product.findById({ _id: req.params.id }, (err, existingProduct) => {
     if (err) {
       return res.status(422).json(err)
     }
@@ -33,8 +33,7 @@ export const checkExistingProduct = (req ,res, next) => {
 }
 
 export const addProduct = (req, res) => {
-  const { name, category, player, playtime, age, description, price, inventory, images } = req.body
-  const product = new Product({ name, category, player, playtime, age, description, price, inventory, images })
+  const product = new Product(req.body)
   product.save((err, savedProduct) => {
     if (err) {
       return res.status(500).json(err)
@@ -45,25 +44,25 @@ export const addProduct = (req, res) => {
   })
 }
 
-  export const editProduct = (req, res) => {
-    const { name, description, price, quantity } = req.body
-    Product.findOneAndUpdate({name: req.params.identifier},
-      { $set: { name, description, price, quantity }}, (err, product) => {
-        if (err || !product) {
-          return res.status(500).json({errors: err})
-        } else {
-          res.json(product)
-        }
-      }
-    )
-  }
-
-  export const deleteProduct = (req, res) => {
-    const { name, description, price, quantity } = req.body
-    Product.findOneAndRemove({name: req.params.identifier}, (err) => {
-      if(err) {
+export const editProduct = (req, res) => {
+  const { name, description, price, quantity } = req.body
+  Product.findOneAndUpdate({name: req.params.identifier},
+    { $set: { name, description, price, quantity }}, (err, product) => {
+      if (err || !product) {
         return res.status(500).json({errors: err})
+      } else {
+        res.json(product)
       }
-      res.json({success: true})
-    })
-  }
+    }
+  )
+}
+
+export const deleteProduct = (req, res) => {
+  const { name, description, price, quantity } = req.body
+  Product.findOneAndRemove({name: req.params.identifier}, (err) => {
+    if(err) {
+      return res.status(500).json({errors: err})
+    }
+    res.json({success: true})
+  })
+}
