@@ -1,24 +1,24 @@
 import axios from 'axios'
 import setAuthorization from '../utils/setAuthorization'
 import jwtDecode from 'jwt-decode'
-import { removeAllMessages, addFlashMessage } from './flashMessages'
-import { ADD_CURRENT_USER } from './types'
+import { addLoginMessage, removeAllMessages } from './flashMessages'
+import { ADD_CURRENT_USER } from '../constants/types'
 
 export const login = (credentials) => (dispatch) => {
+  dispatch(removeAllMessages())
   return axios.post('/api/users/auth', credentials)
   .then(res => {
     const { token } = res.data
     localStorage.setItem('jwtToken', token)
     setAuthorization(token)
-    dispatch(removeAllMessages())
     dispatch(addCurrentUser(jwtDecode(token)))
-    dispatch(addFlashMessage({
+    dispatch(addLoginMessage({
       type: 'success',
       text: 'Loged in successfully'
     }))
   })
   .catch(errors => {
-    dispatch(addFlashMessage({
+    dispatch(addLoginMessage({
       type: 'error',
       text: errors.response.data.form
     }))

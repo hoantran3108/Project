@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from './types'
+import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../constants/types'
 import { saveCart } from '../localStorage'
-import { productsSelector, cartSelector, quantityByIdsSelector } from '../selectors/SelectedProducts'
-import { addFlashMessage, removeAllMessages } from './flashMessages'
+import { productsSelector, cartSelector, quantityByIdsSelector, addedIdsSelector } from '../selectors/SelectedProducts'
+import { addCartMessage, removeAllMessages } from './flashMessages'
 
 const addToCart = (productId) => ({
   type: ADD_TO_CART,
@@ -29,7 +29,7 @@ export const addProductToCart = (productId) => (dispatch, getState) => {
     if (product._id === productId && product.inventory > 0 && (idsByQuantity[productId] || 0) < 100) {
       dispatch(addToCart(productId))
       dispatch(removeAllMessages())
-      dispatch(addFlashMessage({
+      dispatch(addCartMessage({
         type: 'success',
         text: 'Product added to cart'
       }))
@@ -40,6 +40,12 @@ export const addProductToCart = (productId) => (dispatch, getState) => {
     }
   })
 }
+
+// export const getCart = () => (dispatch, getState) => {
+//   const ids = addedIdsSelector(getState())
+//   return axios.get(`/api/products/${ids}`)
+//   .then(res => console.log(res.data.test))
+// }
 
 export const updateCart = (productId, quantity) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
@@ -62,6 +68,10 @@ export const removeProducts = () => (dispatch) => {
 
 export const removeProduct = (productId) => (dispatch, getState) => {
   dispatch(removeProductFromCart(productId))
+  dispatch(addCartMessage({
+    type: 'success',
+    text: 'Product removed from cart'
+  }))
   saveCart({
     products: productsSelector(getState()),
     cart: cartSelector(getState())

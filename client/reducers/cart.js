@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../actions/types'
+import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../constants/types'
 import { Map, List } from 'immutable'
 
 const initialState = Map({
@@ -62,7 +62,6 @@ const quantityById = (state = initialState.get('quantityById'), action) => {
 }
 
 const cart = (state=initialState, action) => {
-
   switch (action.type) {
     default:
     let initialCart = Map({

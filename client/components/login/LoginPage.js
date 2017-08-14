@@ -1,20 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 import { withRouter } from 'react-router-dom'
-import LoginForm from './LoginForm'
 import { getLoginValues } from '../../selectors/SelectedForms'
 import { login } from '../../actions/loginAction'
+import { Container } from 'semantic-ui-react'
+import LoginForm from './LoginForm'
+import { removeAllMessages } from '../../actions/flashMessages'
+import FlashMessagesList from '../flash/FlashMessagesList'
+import { loginMessagesSelector } from '../../selectors/SelectedFlashMessages'
 
-const LoginPage = (props) => <LoginForm {...props} />
+const LoginPage = (props) => (
+  <Container>
+    <FlashMessagesList messages={props.loginMessages} />
+    <LoginForm {...props} />
+  </Container>
+)
 
 const mapStatetoProps = (state) => ({
-  formValues: getLoginValues(state)
+  formValues: getLoginValues(state),
+  loginMessages: loginMessagesSelector(state)
 })
 
 const enhance = compose(
   withRouter,
-  connect(mapStatetoProps, { login })
+  connect(mapStatetoProps, { login, removeAllMessages }),
+  lifecycle({
+    componentDidMount() {
+      this.props.removeAllMessages()
+    }
+  })
 )
 
 export default enhance(LoginPage)

@@ -6,14 +6,6 @@
   height: auto;
 }
 
-.img .product {
-  display: block;
-  max-width:300px;
-  max-height:246px;
-  width: auto;
-  height: auto;
-}
-
 .moveup-enter {
   right: 100px;
 }
@@ -30,20 +22,20 @@
   transition: all 500ms ease-in;
 }
 
-.fade-enter {
+.enter {
   opacity: 0.01;
 }
 
-.fade-enter.fade-enter-active {
+.enterActive {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transition: 500ms ease-in all;
 }
 
-.fade-exit {
+.exit {
   opacity: 1;
 }
 
-.fade-exit.fade-exit-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+.exitActive {
+  opacity: 0.1;
+  transition: 300ms ease-in all;
 }

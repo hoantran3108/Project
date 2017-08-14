@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SET_PRODUCTS, SET_SEARCHED_PRODUCTS } from './types'
+import { SET_PRODUCTS, SET_SEARCHED_PRODUCTS } from '../constants/types'
 
 export const fetchProducts = (prevTotal) => (dispatch) => {
   return axios.get(`/api/products?total=${prevTotal}`)
@@ -20,4 +20,5 @@ export const searchProducts = (value) => (dispatch) => {
 
 export const singleProduct = (id) => (dispatch) => {
   return axios.get(`/api/products/${id}`)
+  .then(err => console.log(err))
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { compose, pure, withHandlers, flattenProp } from 'recompose'
 import { Link } from 'react-router-dom'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
-import styles from '../../../dist/css/style.css'
 
 const Product = ({ _id, name, images, price, addToCart }) => (
   <Card>

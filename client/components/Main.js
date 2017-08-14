@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import SignupPage from './signup/SignupPage'
 import LoginPage from './login/LoginPage'
-import SigninPage from './admin/SigninPage'
 import GuestRoute from './common/GuestRoute'
 import SinglePage from './product/SinglePage'
 import BagPage from './bag/BagPage'
@@ -21,7 +20,6 @@ const Main = (props) => (
       <Route path='/product/:id' component={SinglePage} />
       <Route path='/shoppingbag' component={BagPage} />
       <Route path='/checkout' component={requireAuth(CheckoutPage)} />
-      <Route exact path='/admin' component={SigninPage} />
       <Route component={NotFound} />
     </Switch>
   </Container>

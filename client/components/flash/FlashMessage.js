@@ -1,21 +1,24 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { compose, withHandlers, flattenProp, pure } from 'recompose'
+import { deleteFlashMessage } from '../../actions/flashMessages'
 import { Message } from 'semantic-ui-react'
 
-const FlashMessage = ({ id, type, text, deleteFlashMessage }) => (
+const FlashMessage = ({ id, type, text, deleteMessage }) => (
   <Message
     success={type==='success'}
     negative={type==='error'}
     header={text}
-    onDismiss={deleteFlashMessage}
+    onDismiss={deleteMessage}
   />
 )
 
 const enhance = compose(
   pure,
+  connect(null, { deleteFlashMessage }),
   flattenProp('message'),
   withHandlers({
-    deleteFlashMessage: ({ deleteFlashMessage, id }) => e => deleteFlashMessage(id)
+    deleteMessage: ({ deleteFlashMessage, id }) => e => deleteFlashMessage(id)
   })
 )
 

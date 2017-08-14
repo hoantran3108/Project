@@ -3,7 +3,7 @@ import { signup, authentication, checkExistingUsername, checkExistingEmail } fro
 
 let router = express.Router()
 
-router.post('/signup', checkExistingUsername, checkExistingUsername, signup)
+router.post('/signup', checkExistingUsername, checkExistingEmail, signup)
 router.post('/auth', authentication)
 
 export default router

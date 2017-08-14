@@ -37,7 +37,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
-    "mongoose": "^4.11.1",
+    "mongoose": "^4.10.8",
     "normalizr": "^3.2.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

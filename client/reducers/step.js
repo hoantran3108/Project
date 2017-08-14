@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { SET_ACTIVE_ITEM, TOGGLE_COMPLETED_PROCESS } from '../actions/types'
+import { SET_ACTIVE_ITEM, TOGGLE_COMPLETED_PROCESS } from '../constants/types'
 import { Map } from 'immutable'
 
 const initialState = Map({

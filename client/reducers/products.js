@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { SET_PRODUCTS } from '../actions/types'
+import { SET_PRODUCTS } from '../constants/types'
 import { List, fromJS } from 'immutable'
 
 const initialState = List([])

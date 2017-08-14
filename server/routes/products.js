@@ -4,7 +4,7 @@ import { getProducts, addProduct, editProduct, deleteProduct, getSingleProduct, 
 const router = express.Router()
 
 router.get('/', getProducts)
-router.post('/', addProduct)
+router.post('/', checkExistingProduct, addProduct)
 router.get('/:id', getSingleProduct)
 router.put('/edit/:identifier', checkExistingProduct, editProduct)
 router.delete('/delete/:identifier',deleteProduct)

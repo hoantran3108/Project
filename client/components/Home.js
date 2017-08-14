@@ -5,15 +5,19 @@ import { Container } from 'semantic-ui-react'
 import { productsSelector } from '../selectors/SelectedProducts'
 import { fetchProducts } from '../actions/productAction'
 import { addProductToCart } from '../actions/cartAction'
+import FlashMessagesList from './flash/FlashMessagesList'
+import { cartMessagesSelector, signupMessagesSelector, loginMessagesSelector } from '../selectors/SelectedFlashMessages'
 
 const Home = (props) => (
   <Container>
+    <FlashMessagesList messages={props.cartMessages} />
     <ProductList {...props} />
   </Container>
 )
 
 const mapStatetoProps = (state) => ({
-  products: productsSelector(state)
+  products: productsSelector(state),
+  cartMessages: cartMessagesSelector(state)
 })
 
 export default connect(mapStatetoProps, { fetchProducts, addProductToCart })(Home)

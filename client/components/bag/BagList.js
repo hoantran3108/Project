@@ -72,7 +72,7 @@ const enhance = compose(
         closeModalRemove: ({ isModalRemoveOpen }) => () => ({
           isModalRemoveOpen: false
         }),
-        openModalLogin: ({ isModalLoginOpen }) => () => ({
+        openModalLogin: ({ isModalLoginOpen, removeAllMessages }) => () => ({
           isModalLoginOpen: true
         }),
         closeModalLogin: ({ isModalLoginOpen }) => () => ({
@@ -102,8 +102,7 @@ const enhance = compose(
       checkout: ({ removeAllMessages, history }) => e => {
         removeAllMessages()
         history.push('/checkout')
-      },
-      removeProducts: ({ removeProducts }) => e => removeProducts()
+      }
     }),
     EmptyBagWithNoProduct
   )

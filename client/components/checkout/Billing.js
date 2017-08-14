@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { compose, withHandlers } from 'recompose'
 import { Field, reduxForm } from 'redux-form/immutable'
 import renderField from '../common/renderField'

@@ -6,7 +6,12 @@ const MoveUp = ({ children, ...props }) => (
   <CSSTransition
     {...props}
     timeout={500}
-    classNames={styles.moveup}>
+    classNames={{
+      enter: styles.enter,
+      enterActive: styles.enterActive,
+      exit: styles.exit,
+      exitActive: styles.exitActive
+    }}>
     {children}
   </CSSTransition>
 )

@@ -2,8 +2,8 @@ import axios from 'axios'
 import setAuthorization from '../utils/setAuthorization'
 import jwtDecode from 'jwt-decode'
 import { addCurrentUser } from './loginAction'
-import { addFlashMessage, removeAllMessages } from './flashMessages'
-import { ADD_CURRENT_USER } from './types'
+import { addSignupMessage, removeAllMessages } from './flashMessages'
+import { ADD_CURRENT_USER } from '../constants/types'
 
 export const userSignup = (data) => (dispatch) => {
   dispatch(removeAllMessages())
@@ -13,15 +13,15 @@ export const userSignup = (data) => (dispatch) => {
     localStorage.setItem('jwtToken',token)
     setAuthorization(token)
     dispatch(addCurrentUser(jwtDecode(token)))
-    dispatch(addFlashMessage({
+    dispatch(addSignupMessage({
         type: 'success',
         text: 'Signed up successfully'
       }))
   })
   .catch(errors => {
-    dispatch(addFlashMessage({
+    dispatch(addSignupMessage({
         type: 'error',
-        text: (errors.response.data.form || errors)
+        text: errors.response.data.form
       }))
   })
 }
