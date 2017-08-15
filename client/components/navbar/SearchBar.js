@@ -14,8 +14,8 @@ class SearchBar extends Component {
     value: ''
   })
 
-  handleSearchChange = (e, data) => {
-    this.setState({ isLoading: true, value: data.value })
+  handleSearchChange = (e, { value }) => {
+    this.setState({ isLoading: true, value })
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetState()
 

@@ -4,10 +4,10 @@ import { Menu } from 'semantic-ui-react'
 
 const GuestNav = ({ activeItem, onNavigate }) => (
   <Menu.Menu>
-    <Menu.Item as={Link} to='/signup' name='/signup' active={activeItem==='/signup'} onClick={onNavigate}>
+    <Menu.Item as={Link} to='/signup' replace name='/signup' active={activeItem==='/signup'} onClick={onNavigate}>
       Sign up
     </Menu.Item>
-    <Menu.Item as={Link} to='/login' name='/login' active={activeItem==='/login'} onClick={onNavigate}>
+    <Menu.Item as={Link} to='/login' replace name='/login' active={activeItem==='/login'} onClick={onNavigate}>
       Log in
     </Menu.Item>
   </Menu.Menu>

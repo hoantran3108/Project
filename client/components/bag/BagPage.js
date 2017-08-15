@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose, withHandlers, lifecycle } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { removeProducts } from '../../actions/cartAction'
 import { removeProduct, updateCart } from '../../actions/cartAction'

@@ -12,7 +12,7 @@ const Product = ({ _id, name, images, price, addToCart }) => (
     </Card.Content>
     <Card.Content extra>
       <Button color='green' onClick={addToCart} icon='shop' content='Add to cart' compact />
-      <Button color='google plus' icon='like' content='Wish List' compact />
+      {/* <Button color='google plus' icon='like' content='Wish List' compact /> */}
     </Card.Content>
   </Card>
 )

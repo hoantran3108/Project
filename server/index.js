@@ -12,13 +12,15 @@ import routes from './routes'
 
 Promise.promisifyAll(mongoose)
 
-mongoose.connect('mongodb://127.0.0.1/mongodb', (err, db) => {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log(`Mongodb is connected on port 27017`)
-  }
-})
+// mongoose.connect('mongodb://127.0.0.1/mongodb', (err, db) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log(`Mongodb is connected on port 27017`)
+//   }
+// })
+
+mongoose.connect('mongodb://hoantran:hoantran@ds151450.mlab.com:51450/gamestore')
 
 const app = express();
 

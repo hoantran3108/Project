@@ -6,12 +6,12 @@ import SearchBar from './navbar/SearchBar'
 import UserNav from './navbar/UserNav'
 import GuestNav from './navbar/GuestNav'
 
-const Nav = ({ activeItem, onNavigate, isAuthenticated, ...rest }) => (
+const Nav = ({ activeItem, onNavigate, isAuthenticated, searchProducts, ...rest }) => (
   <Menu secondary>
     <Menu.Item as={Link} to='/' name='/' active={activeItem==='/'} onClick={onNavigate}>Home</Menu.Item>
     <Menu.Menu position='right'>
       <Menu.Item>
-        <SearchBar {...rest} />
+        <SearchBar searchProducts={searchProducts} />
       </Menu.Item>
       <Menu.Item as={Link} to='/shoppingbag' name='/shoppingbag' active={activeItem==='/shoppingbag'} onClick={onNavigate}><Icon name='shopping bag' /></Menu.Item>
     </Menu.Menu>
