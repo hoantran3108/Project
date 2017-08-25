@@ -7,7 +7,7 @@ import { Container, Table, Button, Icon, Header, Modal } from 'semantic-ui-react
 
 const BagList = ({ productList, quantityByIds, removeProducts, checkout, redirectToShop, total,
   openModalRemove, closeModalRemove, isModalRemoveOpen, isAuthenticated,
-  openModalLogin, closeModalLogin, isModalLoginOpen,  ...rest }) => (
+  openModalLogin, closeModalLogin, isModalLoginOpen }) => (
     <Table celled padded fixed>
       <Table.Header>
         <Table.Row>
@@ -38,7 +38,8 @@ const BagList = ({ productList, quantityByIds, removeProducts, checkout, redirec
         </Table.HeaderCell>
         <Table.HeaderCell colSpan='4'>
           <Button icon='shop' label={{ as: 'a', basic: true, content: 'Continue' }} labelPosition='right' onClick={redirectToShop} />
-          {isAuthenticated ? <Button floated='right' color='green' onClick={checkout}>Check out</Button> :
+          {isAuthenticated ?
+            <Button floated='right' color='green' onClick={checkout}>Check out</Button> :
           <Modal trigger={<Button floated='right' color='green' onClick={openModalLogin}>Check out</Button>}
           onClose={closeModalLogin} open={isModalLoginOpen} size='small'>
           <Modal.Content>
@@ -99,10 +100,7 @@ const enhance = compose(
     ),
     withHandlers({
       redirectToShop: ({ history }) => e => history.push('/'),
-      checkout: ({ removeAllMessages, history }) => e => {
-        removeAllMessages()
-        history.push('/checkout')
-      }
+      checkout: ({ removeAllMessages, history }) => e => history.push('/checkout')
     }),
     EmptyBagWithNoProduct
   )

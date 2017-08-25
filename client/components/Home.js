@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ProductList from './product/ProductsList'
+import ProductCategory from './product/ProductCategory'
+import SidebarList from './sidebar/SidebarList'
 import { Container } from 'semantic-ui-react'
 import { productsSelector } from '../selectors/SelectedProducts'
 import { fetchProducts } from '../actions/productAction'
@@ -11,7 +13,8 @@ import { cartMessagesSelector, signupMessagesSelector, loginMessagesSelector } f
 const Home = (props) => (
   <Container>
     <FlashMessagesList messages={props.cartMessages} />
-    <ProductList {...props} />
+    <SidebarList {...props} />
+    {props.location.state ? <ProductCategory {...props} /> : <ProductList {...props} />}
   </Container>
 )
 

@@ -24,7 +24,7 @@ const validate = (values) => {
   if (!getEmail(values)) {
     errors.email = 'Required'
   }
-  if (getEmail(values) && /\S+@\S+\.\S+/i.test(getEmail(values))) {
+  if (getEmail(values) && !/^\w+@[a-z_]+\.[a-z]{2,3}$/i.test(getEmail(values))) {
     errors.email = 'Invalid Email'
   }
   if (!getTelephone(values)) {

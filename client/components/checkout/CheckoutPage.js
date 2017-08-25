@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
 import { Container, Divider } from 'semantic-ui-react'
 import CheckoutStep from './CheckoutStep'
 import CheckoutProcess from './CheckoutProcess'
 import { setActiveItem, toggleProcess } from '../../actions/stepAction'
+import { removeAllMessages } from '../../actions/flashMessages'
 import { userSelector } from '../../selectors/SelectedUser'
 
 const CheckoutPage = (props) => (
@@ -24,4 +26,13 @@ const mapStatetoProps = (state) => ({
   user: userSelector(state)
 })
 
-export default connect(mapStatetoProps, { setActiveItem, toggleProcess })(CheckoutPage)
+const enhance = compose(
+  connect(mapStatetoProps, { setActiveItem, toggleProcess, removeAllMessages }),
+  lifecycle({
+    componentDidMount() {
+      this.props.removeAllMessages()
+    }
+  })
+)
+
+export default enhance(CheckoutPage)

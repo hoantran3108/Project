@@ -7,6 +7,7 @@ import user from './reducers/user'
 import products from './reducers/products'
 import cart from './reducers/cart'
 import flashMessages from './reducers/flashMessages'
+import categories from './reducers/categories'
 import step from './reducers/step'
 import { loadCart } from './localStorage'
 import { fromJS } from 'immutable'
@@ -14,6 +15,7 @@ import { fromJS } from 'immutable'
 const configureStore = () => {
   const rootReducer = combineReducers({
     user,
+    categories,
     products,
     cart,
     step,

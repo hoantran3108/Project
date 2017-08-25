@@ -2,11 +2,10 @@ import axios from 'axios'
 import setAuthorization from '../utils/setAuthorization'
 import jwtDecode from 'jwt-decode'
 import { addCurrentUser } from './loginAction'
-import { addSignupMessage, removeAllMessages } from './flashMessages'
+import { addSignupMessage } from './flashMessages'
 import { ADD_CURRENT_USER } from '../constants/types'
 
 export const userSignup = (data) => (dispatch) => {
-  dispatch(removeAllMessages())
   return axios.post('/api/users/signup',data)
   .then(res => {
     const { token } = res.data

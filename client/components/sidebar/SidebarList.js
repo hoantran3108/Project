@@ -1,0 +1,26 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
+import { getCategories } from '../../actions/categoryAction'
+import { Header, Icon } from 'semantic-ui-react'
+import SideBar from './SideBar'
+import styles from '../../../dist/css/style'
+
+const SidebarList = ({ categories }) => (
+  <div className={styles.sidebar}>
+    <h3 className={styles.sidebarHeader}><Icon className='list' />Categories</h3>
+    {categories && categories.map(category => <SideBar key={category._id} {...category} />)}
+  </div>
+)
+
+const categorySelector = (state) => state.get('categories').toJS()
+
+const mapStatetoProps = (state) => ({
+  categories: categorySelector(state)
+})
+
+const enhance = compose(
+  connect(mapStatetoProps)
+)
+
+export default enhance(SidebarList)

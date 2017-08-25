@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-
-import { reduce } from 'lodash'
-
 import { Iterable } from 'immutable'
 
 const ToJS = (WrappedComponent) => {
@@ -13,7 +10,7 @@ const ToJS = (WrappedComponent) => {
 
     updateNewProps = (currentProps) => {
       const objecEntries = Object.entries(currentProps)
-      return reduce(objecEntries, (newProps, entry) => {
+      return objecEntries.reduce((newProps, entry) => {
         newProps[entry[0]] = Iterable.isIterable(entry[1]) ? entry[1].toJS() : entry[1]
         return newProps
       }, {})

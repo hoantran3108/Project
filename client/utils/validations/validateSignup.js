@@ -6,7 +6,7 @@ const validate = (values) => {
   if (!getFirstname(values)) {
     errors.firstname = 'Required'
   }
-  if (getFirstname(values) && /[^a-zA-Z]/i.test(getFirstname(values))) {
+  if (getFirstname(values) && /^[\W\d]/.test(getFirstname(values))) {
     errors.firstname = 'Only alpha characters'
   }
   if (getFirstname(values) && getFirstname(values).length > 30) {
@@ -15,7 +15,7 @@ const validate = (values) => {
   if (!getLastname(values)) {
     errors.lastname = 'Required'
   }
-  if (getLastname(values) && /[^a-zA-Z ]/i.test(getLastname(values))) {
+  if (getLastname(values) && /^[\W\d]/i.test(getLastname(values))) {
     errors.lastname = 'Only alpha characters'
   }
   if (getLastname(values) && getLastname(values).length > 30) {
@@ -24,7 +24,7 @@ const validate = (values) => {
   if (!getUsername(values)) {
     errors.username = 'Required'
   }
-  if (getUsername(values) && /[^a-zA-Z0-9 ]/i.test(getUsername(values))) {
+  if (getUsername(values) && /^\W+/i.test(getUsername(values))) {
     errors.username = 'Only alphanumeric characters'
   }
   if (getUsername(values) && (getUsername(values).length < 6 || getUsername(values).length > 30)) {
@@ -33,7 +33,7 @@ const validate = (values) => {
   if (!getEmail(values)) {
     errors.email = 'Required'
   }
-  if (getEmail(values) && !/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/i.test(getEmail(values))) {
+  if (getEmail(values) && !/^\w+@[a-z_]+\.[a-z]{2,3}$/i.test(getEmail(values))) {
     errors.email = 'Invalid Email'
   }
   if (getTelephone(values) && isNaN(Number(getTelephone(values)))) {

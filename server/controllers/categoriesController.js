@@ -1,5 +1,11 @@
 import Category from '../models/categories'
 
+export const getCategories = (req, res) => {
+  Category.findAsync()
+  .then(categories => res.json({categories}))
+  .catch(errors => res.json({errors}))
+}
+
 export const checkExistingCategory = (req, res, next) => {
   const { name } = req.body
   Category.findOneAsync({ name })

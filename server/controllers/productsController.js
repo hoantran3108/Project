@@ -3,7 +3,7 @@ import Product from '../models/products'
 export const getProducts = (req, res) => {
   Product.find({ name: new RegExp(req.query.name, 'i')})
   .skip(parseInt(req.query.total))
-  .limit(3)
+  .limit(6)
   .execAsync()
   .then(products => res.json({products}))
   .catch(errors => res.status(500).json({errors}))

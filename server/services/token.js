@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import jwtDecode from 'jwt-decode'
 import config from '../config'
 
-export function generateToken(user) {
+export const generateToken = (user) => {
   const timeStamp = new Date().getTime()
   const { firstname, lastname, _id, username, email, telephone, address } = user
   const payload = {

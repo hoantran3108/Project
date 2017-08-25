@@ -5,7 +5,6 @@ import setAuthorization from './utils/setAuthorization'
 import { addCurrentUser } from './actions/loginAction'
 import configureStore from './configureStore'
 import Root from './components/Root'
-import { fetchProducts } from './actions/productAction'
 
 const store = configureStore()
 
@@ -14,8 +13,6 @@ if (jwtToken) {
   setAuthorization(jwtToken)
   store.dispatch(addCurrentUser(jwtDecode(jwtToken)))
 }
-
-store.dispatch(fetchProducts(0))
 
 render(
   <Root store={store} />,

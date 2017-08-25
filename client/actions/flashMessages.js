@@ -1,23 +1,34 @@
-import { ADD_LOGIN_MESSAGE, ADD_CART_MESSAGE, ADD_SIGNUP_MESSAGE, REMOVE_ALL_MESSAGES, DELETE_FLASH_MESSAGE, REMOVE_CART_MESSAGES } from '../constants/types'
+import { ADD_LOGIN_MESSAGE, ADD_CART_MESSAGE, ADD_SIGNUP_MESSAGE, REMOVE_ALL_MESSAGES, DELETE_FLASH_MESSAGE } from '../constants/types'
 
-export const addLoginMessage = (message) => ({
+const loginMessage = (message) => ({
   type: ADD_LOGIN_MESSAGE,
   message
 })
 
-export const addSignupMessage = (message) => ({
+export const addLoginMessage = (message) => (dispatch) => {
+  dispatch(removeAllMessages())
+  dispatch(loginMessage(message))
+}
+
+const signupMessage = (message) => ({
   type: ADD_SIGNUP_MESSAGE,
   message
 })
 
-export const addCartMessage = (message) => ({
+export const addSignupMessage = (message) => (dispatch) => {
+  dispatch(removeAllMessages())
+  dispatch(signupMessage(message))
+}
+
+const cartMessage = (message) => ({
   type: ADD_CART_MESSAGE,
   message
 })
 
-export const removeCartMessages = () => ({
-  tyep: REMOVE_CART_MESSAGES
-})
+export const addCartMessage = (message) => (dispatch) => {
+  dispatch(removeAllMessages())
+  dispatch(cartMessage(message))
+}
 
 export const deleteFlashMessage = (id) => ({
   type: DELETE_FLASH_MESSAGE,
