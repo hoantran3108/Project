@@ -11,8 +11,8 @@ const LoginForm = ({ handleSubmit, onLogin, pristine, reset, submitting, loginFa
     <Field name='password' type='password' component={renderField} label='Password' />
     <Button primary disabled={pristine || submitting}>Log in</Button>
     <Button disabled={pristine || submitting} onClick={reset}>Clear Fields</Button>
-    {/* <Button color='facebook' onClick={loginFacebook}><Icon name='facebook' />Continue with Facebook</Button>
-    <Button color='google plus' onClick={loginGoogle}><Icon name='google' />Continue with Google</Button> */}
+    <Button color='facebook' onClick={loginFacebook}><Icon name='facebook' />Continue with Facebook</Button>
+    <Button color='google plus' onClick={loginGoogle}><Icon name='google' />Continue with Google</Button>
   </Form>
 )
 

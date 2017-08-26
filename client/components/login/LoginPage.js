@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { getLoginValues } from '../../selectors/SelectedForms'
-import { login, loginFacebook } from '../../actions/loginAction'
+import { login } from '../../actions/loginAction'
 import { Container } from 'semantic-ui-react'
 import LoginForm from './LoginForm'
 import { removeAllMessages } from '../../actions/flashMessages'
@@ -24,7 +24,7 @@ const mapStatetoProps = (state) => ({
 
 const enhance = compose(
   withRouter,
-  connect(mapStatetoProps, { login, removeAllMessages, loginFacebook }),
+  connect(mapStatetoProps, { login, removeAllMessages }),
   lifecycle({
     componentDidMount() {
       this.props.removeAllMessages()

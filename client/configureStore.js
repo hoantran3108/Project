@@ -8,6 +8,7 @@ import products from './reducers/products'
 import cart from './reducers/cart'
 import flashMessages from './reducers/flashMessages'
 import categories from './reducers/categories'
+import banners from './reducers/banners'
 import step from './reducers/step'
 import { loadCart } from './localStorage'
 import { fromJS } from 'immutable'
@@ -19,6 +20,7 @@ const configureStore = () => {
     products,
     cart,
     step,
+    banners,
     flashMessages,
     form
   })

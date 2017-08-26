@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+  overflow: hidden;
+  max-width: 650px;
+  max-height:300px;
+  margin: -15px 0 20px 0;
+  box-shadow: 0 0 2px 1px rgba(0,0,0,0.5);
+}
+
+.image {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.image:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.button {
+  position: absolute;
+  top: 140px;
+  opacity: 0.5;
+}
+
+.buttonLeft {
+  position: absolute;
+  left: 0;
+}
+
+.buttonRight {
+  position: absolute;
+  right: -4px;
+}

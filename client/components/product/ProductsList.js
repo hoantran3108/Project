@@ -1,10 +1,11 @@
 import React from 'react'
 import Product from './Product'
+import List from '../common/List'
 import { Card } from 'semantic-ui-react'
 
 const ProductList = ({ products, ...rest }) => (
-  <Card.Group itemsPerRow='three'>
-    {products.map(product => <Product key={product._id} {...product} {...rest} />)}
+  <Card.Group itemsPerRow='four'>
+    {products.map(List(Product, {...rest}))}
   </Card.Group>
 )
 

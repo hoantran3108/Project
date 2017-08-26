@@ -4,12 +4,13 @@ import { compose, lifecycle } from 'recompose'
 import { getCategories } from '../../actions/categoryAction'
 import { Header, Icon } from 'semantic-ui-react'
 import SideBar from './SideBar'
-import styles from '../../../dist/css/style'
+import List from '../common/List'
+import sidebar from '../../../dist/css/sidebar'
 
 const SidebarList = ({ categories }) => (
-  <div className={styles.sidebar}>
-    <h3 className={styles.sidebarHeader}><Icon className='list' />Categories</h3>
-    {categories && categories.map(category => <SideBar key={category._id} {...category} />)}
+  <div className={sidebar.container}>
+    <h3 className={sidebar.header}><Icon className='list' />Categories</h3>
+    {categories && categories.map(List(SideBar))}
   </div>
 )
 

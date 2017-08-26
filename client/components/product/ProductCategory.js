@@ -6,7 +6,7 @@ import { Card, Button, Container } from 'semantic-ui-react'
 
 const ProductList = ({ products, isActivated, onLoad, location, ...rest }) => (
   <Container>
-    <Card.Group itemsPerRow='three'>
+    <Card.Group itemsPerRow='four'>
       {location.state && products.map(product => location.state._id === product.category &&
         <Product key={product._id} {...product} {...rest} />
       )}

@@ -13,14 +13,14 @@ const login = (state = initialState.get('login'), action) => {
     case ADD_LOGIN_MESSAGE:
     const { type, text } = action.message
     return state.push({
-      id: uuid.v4(),
+      _id: uuid.v4(),
       type,
       text
     })
 
     case DELETE_FLASH_MESSAGE:
     const index = state.findIndex(message => {
-      if (message.id===action.id) return message.id
+      if (message._id===action._id) return message._id
     })
     return state.delete(index)
 
@@ -34,14 +34,14 @@ const cart = (state = initialState.get('cart'), action) => {
     case ADD_CART_MESSAGE:
     const { type, text } = action.message
     return state.push({
-      id: uuid.v4(),
+      _id: uuid.v4(),
       type,
       text
     })
 
     case DELETE_FLASH_MESSAGE:
     const index = state.findIndex(message => {
-      if (message.id===action.id) return message.id
+      if (message._id===action._id) return message._id
     })
     return state.delete(index)
 
@@ -55,14 +55,14 @@ const signup = (state = initialState.get('signup'), action) => {
     case ADD_SIGNUP_MESSAGE:
     const { type, text } = action.message
     return state.push({
-      id: uuid.v4(),
+      _id: uuid.v4(),
       type,
       text
     })
 
     case DELETE_FLASH_MESSAGE:
     const index = state.findIndex(message => {
-      if (message.id===action.id) return message.id
+      if (message._id===action._id) return message._id
     })
     return state.delete(index)
 

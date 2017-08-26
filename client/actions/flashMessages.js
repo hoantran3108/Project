@@ -30,9 +30,9 @@ export const addCartMessage = (message) => (dispatch) => {
   dispatch(cartMessage(message))
 }
 
-export const deleteFlashMessage = (id) => ({
+export const deleteFlashMessage = (_id) => ({
   type: DELETE_FLASH_MESSAGE,
-  id
+  _id
 })
 
 export const removeAllMessages = () => ({
