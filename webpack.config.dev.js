@@ -43,6 +43,9 @@ export default {
     ]
   },
   resolve: {
-    extensions: ['.js', '.css']
+    extensions: ['.js', '.css'],
+    alias: {
+      CSS: path.resolve(__dirname, 'dist/css')
+    }
   }
 }

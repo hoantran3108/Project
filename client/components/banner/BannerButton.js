@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
-import banner from '../../../dist/css/banner'
+import banner from 'CSS/banner'
 
 const BannerButton = ({ decrementIndex, incrementIndex}) => (
   <Button.Group>

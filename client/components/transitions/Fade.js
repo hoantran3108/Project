@@ -1,6 +1,6 @@
 import React from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import transitions from '../../../dist/css/transitions'
+import transitions from 'CSS/transitions'
 
 const Fade = ({ children, ...props }) => (
   <CSSTransition

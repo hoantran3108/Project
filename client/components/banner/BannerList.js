@@ -7,7 +7,7 @@ import BannerButton from './BannerButton'
 import Spinner from '../common/Spinner'
 import List from '../common/List'
 import Fade from '../transitions/Fade'
-import banner from '../../../dist/css/banner'
+import banner from 'CSS/banner'
 
 const BannerList = ({ banners, show, index, mouseOver, mouseLeave, ...rest }) => (
   <Fade in={show}>

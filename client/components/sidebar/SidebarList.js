@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import { getCategories } from '../../actions/categoryAction'
-import { Header, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import SideBar from './SideBar'
 import List from '../common/List'
-import sidebar from '../../../dist/css/sidebar'
+import sidebar from 'CSS/sidebar'
 
 const SidebarList = ({ categories }) => (
   <div className={sidebar.container}>

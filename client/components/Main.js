@@ -10,21 +10,18 @@ import BagPage from './bag/BagPage'
 import CheckoutPage from './checkout/CheckoutPage'
 import NotFound from './notfound/NotFound'
 import requireAuth from '../utils/requireAuth'
-import { Container } from 'semantic-ui-react'
 
 const Main = (props) => (
-  <Container>
-    <Switch>
-      <Route exact path='/' children={() => <Home {...props} />} />
-      <GuestRoute path='/signup' component={SignupPage} {...props}/>
-      <GuestRoute path='/login' component={LoginPage} {...props}/>
-      <Route path='/category/:name' component={Home} />
-      <Route path='/product/:id' component={SinglePage} />
-      <Route path='/shoppingbag' component={BagPage} />
-      <Route path='/checkout' component={requireAuth(CheckoutPage)} />
-      <Route component={NotFound} />
-    </Switch>
-  </Container>
+  <Switch>
+    <Route exact path='/' component={Home} />
+    <GuestRoute path='/signup' component={SignupPage} {...props} />
+    <GuestRoute path='/login' component={LoginPage} {...props} />
+    <Route path='/category/:name' component={Home} />
+    <Route path='/product/:id' component={SinglePage} />
+    <Route path='/shoppingbag' component={BagPage} />
+    <Route path='/checkout' component={requireAuth(CheckoutPage)} />
+    <Route component={NotFound} />
+  </Switch>
 )
 
 export default Main

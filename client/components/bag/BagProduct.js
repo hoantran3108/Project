@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withState, withHandlers, compose, flattenProp } from 'recompose'
 import { Table, Image, Button, Input, Label, Icon } from 'semantic-ui-react'
-import styles from '../../../dist/css/style'
+import styles from 'CSS/style'
 
 const BagProduct = ({ _id, name, price, quantity, images, changeQuantity, removeProduct, errors }) => (
   <Table.Body>
