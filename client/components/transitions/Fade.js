@@ -5,7 +5,6 @@ import transitions from 'CSS/transitions'
 const Fade = ({ children, ...props }) => (
   <CSSTransition
     {...props}
-    timeout={500}
     classNames={{
       enter: transitions.fadeEnter,
       enterActive: transitions.fadeEnterActive,

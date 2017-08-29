@@ -5,6 +5,7 @@ import { Container } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { logout } from '../actions/loginAction'
 import { searchProducts, fetchProducts } from '../actions/productAction'
+import { getBanners } from '../actions/bannerAction'
 import { getCategories } from '../actions/categoryAction'
 import { CartTotal, SelectedProducts } from '../selectors/SelectedProducts'
 import { authenticateSelector } from '../selectors/SelectedUser'
@@ -24,12 +25,13 @@ const mapStatetoProps = (state) => ({
 
 const enhance = compose(
   withRouter,
-  connect(mapStatetoProps, { logout, searchProducts, getCategories, fetchProducts }),
+  connect(mapStatetoProps, { logout, searchProducts, getCategories, fetchProducts, getBanners }),
   lifecycle({
     componentDidMount() {
-      const { fetchProducts, getCategories } = this.props
+      const { fetchProducts, getCategories, getBanners } = this.props
       fetchProducts(0)
       getCategories()
+      getBanners()
     }
   })
 )

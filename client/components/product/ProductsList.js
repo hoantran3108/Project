@@ -1,11 +1,11 @@
 import React from 'react'
 import Product from './Product'
-import List from '../common/List'
+import renderList from '../common/renderList'
 import { Card } from 'semantic-ui-react'
 
 const ProductList = ({ products, ...rest }) => (
   <Card.Group itemsPerRow='four'>
-    {products.map(List(Product, {...rest}))}
+    {products.map(renderList(Product, {...rest}))}
   </Card.Group>
 )
 

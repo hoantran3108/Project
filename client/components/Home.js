@@ -13,7 +13,7 @@ import { cartMessagesSelector, signupMessagesSelector, loginMessagesSelector } f
 
 const Home = (props) => (
   <Container>
-    <SidebarList />
+    <SidebarList {...props} />
     <BannerList />
     <FlashMessagesList messages={props.cartMessages} />
     {props.location.state ? <ProductCategory {...props} /> : <ProductList {...props} />}

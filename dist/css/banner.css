@@ -21,15 +21,41 @@
 .button {
   position: absolute;
   top: 140px;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .buttonLeft {
   position: absolute;
-  left: 0;
+  left: -4px;
 }
 
 .buttonRight {
   position: absolute;
   right: -4px;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+[type=button] {
+  cursor:pointer;
+  height: 10px;
+  width: 6px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: 0;
+  transition: background-color 0.3s ease;
+}
+
+[type=button]:focus {
+  outline: none;
+}
+
+[type=button]:hover, .active {
+  background-color: #717171;
 }

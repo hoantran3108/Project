@@ -8,10 +8,31 @@
 }
 
 .fadeExit {
+  background-color: #eff6ff;
   opacity: 1;
 }
 
 .fadeExitActive {
   opacity: 0.01;
-  transition: opacity 500ms ease-in;
+  transition: all 500ms ease-in;
+}
+
+.slideDownEnter {
+  position: absolute;
+  left: -100px;
+}
+
+.slideDownEnterActive {
+  left: 0px;
+  transition: all 1000ms ease-in;
+}
+
+.slideDownExit {
+    background-color: yellow;
+}
+
+.slideDownExitActive {
+
+  background-color: red;
+  transition: all 5000ms ease-in;
 }

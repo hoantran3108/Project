@@ -4,13 +4,13 @@ import { compose, lifecycle } from 'recompose'
 import { getCategories } from '../../actions/categoryAction'
 import { Icon } from 'semantic-ui-react'
 import SideBar from './SideBar'
-import List from '../common/List'
+import renderList from '../common/renderList'
 import sidebar from 'CSS/sidebar'
 
 const SidebarList = ({ categories }) => (
   <div className={sidebar.container}>
     <h3 className={sidebar.header}><Icon className='list' />Categories</h3>
-    {categories && categories.map(List(SideBar))}
+    {categories && categories.map(renderList(SideBar))}
   </div>
 )
 
