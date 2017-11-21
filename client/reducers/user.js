@@ -4,7 +4,7 @@ import { Map, fromJS } from 'immutable'
 
 const initialState = Map({
   isAuthenticated: false,
-  user: Map({})
+  user: Map()
 })
 
 export default (state = initialState, action) => {

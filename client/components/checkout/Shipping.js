@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, withHandlers } from 'recompose'
-import { Form, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 const Shipping = ({ onSubmit }) => (
   <Button onClick={onSubmit} color='green'>Next</Button>
@@ -8,7 +8,7 @@ const Shipping = ({ onSubmit }) => (
 
 const enhance = compose(
   withHandlers({
-    onSubmit: ({ setActiveItem, toggleProcess }) => event => {
+    onSubmit: ({ setActiveItem, toggleProcess }) => () => {
       setActiveItem('billing'),
       toggleProcess('shipping')
     }

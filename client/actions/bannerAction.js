@@ -8,6 +8,6 @@ const setBanners = (banners) => ({
 
 export const getBanners = () => (dispatch) => {
   axios.get('/api/banners')
-  .then(res => dispatch(setBanners(res.data.banners)))
-  .catch(error => console.log(error))
+    .then(res => dispatch(setBanners(res.data.banners)))
+    .catch(error => console.log(error))
 }

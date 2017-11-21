@@ -3,9 +3,9 @@ import uuid from 'uuid'
 import { List, Map } from 'immutable'
 
 const initialState = Map({
-  login: List([]),
-  signup: List([]),
-  cart: List([])
+  login: List(),
+  signup: List(),
+  cart: List()
 })
 
 const login = (state = initialState.get('login'), action) => {

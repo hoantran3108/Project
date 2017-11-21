@@ -30,7 +30,8 @@ const enhance = compose(
   connect(mapStatetoProps, { setActiveItem, toggleProcess, removeAllMessages }),
   lifecycle({
     componentDidMount() {
-      this.props.removeAllMessages()
+      const { removeAllMessages } = this.props
+      removeAllMessages()
     }
   })
 )

@@ -4,7 +4,7 @@ import { compose, withState, withHandlers, lifecycle, withStateHandlers, renderC
 import Banner from './Banner'
 import BannerButton from './BannerButton'
 import BannerDot from './BannerDot'
-import { Container, List } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import Spinner from '../common/Spinner'
 import renderList from '../common/renderList'
 import Fade from '../transitions/Fade'

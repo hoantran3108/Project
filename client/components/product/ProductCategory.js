@@ -10,9 +10,10 @@ const ProductList = ({ products, isActivated, onLoad, location, ...rest }) => (
       {location.state && products.map(product => location.state._id === product.category &&
         <Product key={product._id} {...product} {...rest} />
       )}
-      {isActivated && <Button onClick={onLoad}>Load more</Button>}
     </Card.Group>
+    {isActivated && <Button onClick={onLoad}>Load more</Button>}
   </Container>
+
 )
 
 const isLoading = ({ isLoading }) => isLoading
@@ -26,7 +27,7 @@ const enhance = compose(
   withState('isLoading', 'toggleLoading', false),
   withState('isActivated', 'toggleActive', true),
   withHandlers({
-    onLoad: ({ fetchProducts, products, toggleLoading, toggleActive }) => e => {
+    onLoad: ({ fetchProducts, products, toggleLoading, toggleActive }) => () => {
       toggleLoading(true)
       fetchProducts(products.length)
       .then(res => {

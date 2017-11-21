@@ -22,8 +22,8 @@ const enhance = compose(
     validate
   }),
   withHandlers({
-    onLogin: ({ login, formValues }) => e => login(formValues),
-    loginFacebook: () => e => window.location = 'http://localhost:3000/api/users/auth/facebook'
+    onLogin: ({ login, formValues }) => () => login(formValues),
+    loginFacebook: () => () => window.location = 'http://localhost:3000/api/users/auth/facebook'
   })
 )
 

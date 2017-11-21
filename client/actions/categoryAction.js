@@ -8,6 +8,6 @@ const setCategories = (categories) => ({
 
 export const getCategories = () => (dispatch) => {
   axios.get('/api/categories')
-  .then(res => dispatch(setCategories(res.data.categories)))
-  .catch(error => console.log(error))
+    .then(res => dispatch(setCategories(res.data.categories)))
+    .catch(error => console.log(error))
 }

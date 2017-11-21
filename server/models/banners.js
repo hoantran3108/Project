@@ -12,7 +12,12 @@ const bannerSchema = new Schema({
   image: {
     type: String,
     require: true
-  }
+  },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+    require: true
+  },
 }, { timestamps: { createdAt: 'created_at' }})
 
 export default mongoose.model('Banner', bannerSchema)

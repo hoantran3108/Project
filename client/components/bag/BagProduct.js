@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { withState, withHandlers, compose, flattenProp } from 'recompose'
+import { compose, withState, withHandlers, onlyUpdateForKeys } from 'recompose'
 import { Table, Image, Button, Input, Label, Icon, Header } from 'semantic-ui-react'
 import bag from 'CSS/bag'
 import Fade from '../transitions/Fade'
 
-const BagProduct = ({ show, _id, name, price, quantity, images, changeQuantity, removeProduct, errors }) => (
+const BagProduct = ({ _id, name, images, price, show, errors, removeCurrentProduct, changeQuantity, quantity }) => (
   <Fade in={show} timeout={1000}>
     <Table.Body>
       <Table.Row>
         <Table.Cell>
-          <Button icon='remove' onClick={removeProduct} />
+          <Button icon='remove' onClick={removeCurrentProduct} />
         </Table.Cell>
         <Table.Cell>
           <img className={bag.image} src={images[0]} />
@@ -35,19 +35,20 @@ const BagProduct = ({ show, _id, name, price, quantity, images, changeQuantity, 
 
 const enhance = compose(
   withState('quantity', 'setQuantity', props => props.quantityById),
-  withState('errors', 'setErrors', ''),
   withState('show', 'toggleShow', true),
-  flattenProp('product'),
+  withState('errors', 'setErrors', ''),
+  onlyUpdateForKeys(['show', 'quantity', 'errors']),
   withHandlers({
-    changeQuantity: ({ _id, updateCart, setQuantity, setTotal, total, setErrors }) => e => {
+    changeQuantity: ({ _id, updateCart, setQuantity, setErrors }) => e => {
+      const quantity = e.target.value
       setErrors('')
-      if (e.target.value >= 0 && e.target.value<=100) {
-        setQuantity(e.target.value)
-        updateCart(_id, e.target.value)
-        .catch(errors => setErrors(errors))
+      if (quantity>=0 || quantity <=100) {
+        setQuantity(quantity)
+        updateCart(_id, quantity)
+          .catch(errors => setErrors(errors))
       }
     },
-    removeProduct: ({ _id, removeProduct, toggleShow }) => e => {
+    removeCurrentProduct: ({ _id, removeProduct, toggleShow }) => () => {
       toggleShow(false)
       setTimeout(() => removeProduct(_id), 1000)
     }

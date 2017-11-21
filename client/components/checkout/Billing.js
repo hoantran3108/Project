@@ -6,7 +6,7 @@ import validate from '../../utils/validations/validateBilling'
 import { Form, Button } from 'semantic-ui-react'
 
 const Billing = ({ handleSubmit, onSubmit, goPrevious, pristine, submitting }) => (
-  <Form onSubmit={handleSubmit} loading={submitting}>
+  <Form onSubmit={handleSubmit(onSubmit)} loading={submitting}>
     <Form.Group widths='equal'>
       <Field name='firstname' component={renderField} label='Firstname*' />
       <Field name='lastname' component={renderField} label='Lastname*' />
@@ -29,6 +29,13 @@ const enhance = compose(
   reduxForm({
     form: 'billingForm',
     validate
+  }),
+  withHandlers({
+    onSubmit: ({ setActiveItem, toggleProcess }) => () => {
+      setActiveItem('payment'),
+      toggleProcess('billing')
+    },
+    goPrevious: ({ setActiveItem }) => () => setActiveItem('shipping')
   })
 )
 

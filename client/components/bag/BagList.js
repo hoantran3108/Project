@@ -8,11 +8,11 @@ import { Container, Table } from 'semantic-ui-react'
 import bag from 'CSS/bag'
 
 const BagList = ({ productList, ...rest }) => (
-    <Container className={bag.container}>
-      <Table celled padded fixed>
-        <BagHeader />
-        {productList}
-        <BagFooter {...rest} />
+  <Container className={bag.container}>
+    <Table celled padded fixed>
+      <BagHeader />
+      {productList}
+      <BagFooter {...rest} />
     </Table>
   </Container>
 )
@@ -27,44 +27,43 @@ const EmptyBagWithNoProduct = branch(
 const enhance = compose(
   withStateHandlers(
     { isModalRemoveOpen: false,
-      isModalLoginOpen: false },
-      {
-        openModalRemove: ({ isModalRemoveOpen }) => () => ({
-          isModalRemoveOpen: true
-        }),
-        closeModalRemove: ({ isModalRemoveOpen }) => () => ({
-          isModalRemoveOpen: false
-        }),
-        openModalLogin: ({ isModalLoginOpen, removeAllMessages }) => () => ({
-          isModalLoginOpen: true
-        }),
-        closeModalLogin: ({ isModalLoginOpen }) => () => ({
-          isModalLoginOpen: false
-        })
-      }
-    ),
-    shouldUpdate((prevProps, nextProps) => {
-      if(prevProps.isAuthenticated !== nextProps.isAuthenticated && prevProps.isModalLoginOpen !== nextProps.isModalLoginOpen) {
-        nextProps.closeModalLogin()
-        return true
-      }
-      return true
-    }),
-    withProps(props => ({
-      productList: props.products.map(product =>
-        <BagProduct
-          key={product._id}
-          quantityById={props.quantityByIds[product._id]}
-          {...props}
-          {...product}
-        />)
+      isModalLoginOpen: false
+    }, {
+      openModalRemove: ({ isModalRemoveOpen }) => () => ({
+        isModalRemoveOpen: true
+      }),
+      closeModalRemove: ({ isModalRemoveOpen }) => () => ({
+        isModalRemoveOpen: false
+      }),
+      openModalLogin: ({ isModalLoginOpen, removeAllMessages }) => () => ({
+        isModalLoginOpen: true
+      }),
+      closeModalLogin: ({ isModalLoginOpen }) => () => ({
+        isModalLoginOpen: false
       })
-    ),
-    withHandlers({
-      redirectToShop: ({ history }) => e => history.push('/'),
-      checkout: ({ removeAllMessages, history }) => e => history.push('/checkout')
-    }),
-    EmptyBagWithNoProduct
-  )
+    }
+  ),
+  shouldUpdate((prevProps, nextProps) => {
+    if(prevProps.isAuthenticated !== nextProps.isAuthenticated && prevProps.isModalLoginOpen !== nextProps.isModalLoginOpen)
+      nextProps.closeModalLogin()
+    return true
+  }),
+  withProps(({ updateCart, removeProduct, products, quantityByIds }) => ({
+    productList: products.map(product =>
+      <BagProduct
+        key={product._id}
+        quantityById={quantityByIds[product._id]}
+        updateCart={updateCart}
+        removeProduct={removeProduct}
+        {...product}
+      />)
+  })
+  ),
+  withHandlers({
+    redirectToShop: ({ history }) => () => history.push('/'),
+    checkout: ({ history }) => () => history.push('/checkout')
+  }),
+  EmptyBagWithNoProduct
+)
 
-  export default enhance(BagList)
+export default enhance(BagList)

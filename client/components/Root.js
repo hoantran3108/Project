@@ -5,9 +5,9 @@ import App from './App'
 
 const Root = ({ store }) => (
   <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+    <Router>
+      <App />
+    </Router>
   </Provider>
 )
 

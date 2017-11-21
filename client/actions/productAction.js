@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { SET_PRODUCTS, SET_SEARCHED_PRODUCTS } from '../constants/types'
+import { SET_PRODUCTS } from '../constants/types'
 
 export const fetchProducts = (prevTotal) => (dispatch) => {
   return axios.get(`/api/products?total=${prevTotal}`)
-  .then(res => {
-    dispatch(setProducts(res.data.products))
-    return new Promise(resolve => resolve(res))
-  })
+    .then(res => {
+      dispatch(setProducts(res.data.products))
+      return new Promise(resolve => resolve(res))
+    })
 }
 
 const setProducts = (products) => ({
@@ -14,11 +14,11 @@ const setProducts = (products) => ({
   products
 })
 
-export const searchProducts = (value) => (dispatch) => {
+export const searchProducts = (value) => () => {
   return axios.get(`/api/products?name=${value}`)
 }
 
-export const singleProduct = (id) => (dispatch) => {
+export const singleProduct = (id) => () => {
   return axios.get(`/api/products/${id}`)
-  .then(err => console.log(err))
+    .then(err => console.log(err))
 }

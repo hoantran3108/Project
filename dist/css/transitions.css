@@ -19,20 +19,19 @@
 
 .slideDownEnter {
   position: absolute;
-  left: -100px;
+  top: -100px;
 }
 
 .slideDownEnterActive {
-  left: 0px;
+  top: 0px;
   transition: all 1000ms ease-in;
 }
 
 .slideDownExit {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 .slideDownExitActive {
-
   background-color: red;
   transition: all 5000ms ease-in;
 }

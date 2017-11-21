@@ -2,8 +2,8 @@ import { ADD_TO_CART, REMOVE_PRODUCTS, REMOVE_PRODUCT, UPDATE_CART } from '../co
 import { Map, List } from 'immutable'
 
 const initialState = Map({
-  addedIds: List([]),
-  quantityById: Map({})
+  addedIds: List(),
+  quantityById: Map()
 })
 
 const addedIds = (state = initialState.get('addedIds'), action) => {

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
-import ProductList from './product/ProductsList'
 import SignupPage from './signup/SignupPage'
 import LoginPage from './login/LoginPage'
 import GuestRoute from './common/GuestRoute'

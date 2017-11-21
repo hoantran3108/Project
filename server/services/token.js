@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import jwtDecode from 'jwt-decode'
 import config from '../config'
 
 export const generateToken = (user) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose, withHandlers, flattenProp, pure, withState, lifecycle } from 'recompose'
+import { compose, withHandlers, withState, lifecycle } from 'recompose'
 import { deleteFlashMessage } from '../../actions/flashMessages'
 import { Message, Transition } from 'semantic-ui-react'
 
@@ -16,19 +16,18 @@ const FlashMessage = ({ type, text, deleteMessage, visible }) => (
 )
 
 const enhance = compose(
-  pure,
   connect(null, { deleteFlashMessage }),
-  flattenProp('message'),
   withState('visible', 'toggleVisible', false),
-  withHandlers({
-    deleteMessage: ({ deleteFlashMessage, _id, toggleVisible }) => e => {
-      toggleVisible(false)
-      setTimeout(() => deleteFlashMessage(_id), 1000)
-    }
-  }),
   lifecycle({
     componentDidMount() {
-      this.props.toggleVisible(true)
+      const { visible, toggleVisible } = this.props
+      toggleVisible(!visible)
+    }
+  }),
+  withHandlers({
+    deleteMessage: ({ deleteFlashMessage, _id, toggleVisible, visible }) => () => {
+      toggleVisible(!visible)
+      setTimeout(() => deleteFlashMessage(_id), 550)
     }
   })
 )

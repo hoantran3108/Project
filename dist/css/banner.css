@@ -3,7 +3,6 @@
   overflow: hidden;
   max-width: 650px;
   max-height:300px;
-  margin: -15px 0 20px 0;
   box-shadow: 0 0 2px 1px rgba(0,0,0,0.5);
 }
 
@@ -37,7 +36,7 @@
 .list {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 [type=button] {

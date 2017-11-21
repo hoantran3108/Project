@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
-   name: {
+  name: {
     type: String,
     max: 50,
     unique: true,

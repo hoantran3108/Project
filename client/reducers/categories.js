@@ -1,7 +1,7 @@
 import { List } from 'immutable'
 import { GET_CATEGORIES } from '../constants/types'
 
-const initialState = List([])
+const initialState = List()
 
 export default (state = initialState, action) => {
   switch (action.type) {

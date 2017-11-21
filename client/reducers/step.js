@@ -4,7 +4,7 @@ import { Map } from 'immutable'
 
 const initialState = Map({
   activeItem: 'shipping',
-  isCompleted: Map({})
+  isCompleted: Map()
 })
 
 const activeItem = (state = initialState.get('activeItem'), action) => {

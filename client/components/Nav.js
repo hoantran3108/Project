@@ -11,7 +11,7 @@ const Nav = ({ activeItem, onNavigate, isAuthenticated, searchProducts, ...rest 
     <Menu.Item as={Link} to='/' name='/' active={activeItem==='/'} onClick={onNavigate}>Home</Menu.Item>
     <Menu.Menu position='right'>
       <Menu.Item>
-        <SearchBar searchProducts={searchProducts} />
+        <SearchBar searchProducts={searchProducts} {...rest} />
       </Menu.Item>
       <Menu.Item as={Link} to='/shoppingbag' name='/shoppingbag' active={activeItem==='/shoppingbag'} onClick={onNavigate}><Icon name='shopping bag' /></Menu.Item>
     </Menu.Menu>
