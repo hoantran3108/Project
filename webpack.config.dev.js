@@ -2,6 +2,7 @@ import path from 'path'
 import webpack from 'webpack'
 
 export default {
+  
   devtool: 'eval-source-map',
   entry: [
     'react-hot-loader/patch',
