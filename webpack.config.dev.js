@@ -2,7 +2,8 @@ import path from 'path'
 import webpack from 'webpack'
 
 export default {
-
+  //Test cherry pick
+  //cherry pick
   devtool: 'eval-source-map',
   entry: [
     'react-hot-loader/patch',
