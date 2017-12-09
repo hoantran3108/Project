@@ -2,14 +2,14 @@ import path from 'path'
 import webpack from 'webpack'
 
 export default {
-
+  //Test cherry pick
   devtool: 'eval-source-map',
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
     path.join(__dirname, '/client/index.js')
   ],
-  
+
   output: {
     path: '/',
     publicPath: '/',
