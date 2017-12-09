@@ -2,13 +2,20 @@ import path from 'path'
 import webpack from 'webpack'
 
 export default {
+<<<<<<< HEAD
   
+=======
+>>>>>>> d779212... fix webpack
   devtool: 'eval-source-map',
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
     path.join(__dirname, '/client/index.js')
   ],
+<<<<<<< HEAD
+=======
+  
+>>>>>>> d779212... fix webpack
   output: {
     path: '/',
     publicPath: '/',
