@@ -42,7 +42,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
-    "mongoose": "^4.10.8",
+    "mongoose": "^5.11.7",
     "node-fetch": "^1.7.2",
     "normalizr": "^3.2.3",
     "passport": "^0.4.0",
